@@ -1,0 +1,14 @@
+{
+  "weekly_template_2026-03-16": {
+    "mode": "generate",
+    "hard_limit_seconds": 20.0
+  },
+  "weekly_mixed_follow_observer": {
+    "mode": "generate",
+    "hard_limit_seconds": 22.0
+  },
+  "reschedule_roundtrip_22_slots": {
+    "mode": "reschedule",
+    "hard_limit_seconds": 20.0
+  }
+}

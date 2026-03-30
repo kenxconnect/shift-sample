@@ -1,0 +1,428 @@
+{
+    "schema_version": 1,
+    "exported_at": "2026-03-19T00:00:00+09:00",
+    "staff_config": null,
+    "history": [],
+    "templates": [
+        {
+            "name": "3月16日(月) 24枠",
+            "input_data": {
+                "target_date": "2026-03-16",
+                "patient_count": 24,
+                "off_staff": [
+                    "大橋",
+                    "中野",
+                    "堀場"
+                ],
+                "backup_absent": false,
+                "morning_off_staff": [],
+                "afternoon_off_staff": [],
+                "morning_off_last_slot": 12,
+                "afternoon_off_first_slot": 13,
+                "shift_overrides": {},
+                "female_slots": [
+                    1,
+                    7,
+                    11,
+                    12,
+                    14,
+                    17,
+                    19,
+                    20,
+                    21
+                ],
+                "cancelled_slots": [],
+                "blank_after_slot": 8,
+                "heart_training_slots": [
+                    3,
+                    4,
+                    6,
+                    7,
+                    8,
+                    10,
+                    16,
+                    17,
+                    20,
+                    22
+                ],
+                "heart_training_case_count": 2,
+                "observer_training": {},
+                "slot_start_times": {},
+                "slot_echo_start_times": {},
+                "slot_ecg_start_times": {},
+                "slot_unlinked_time_slots": [],
+                "duties": {
+                    "生体①": "大島",
+                    "生体②": "金井",
+                    "早朝エコー": "石井",
+                    "立ち上げ": "上之平",
+                    "バックアップ": "",
+                    "転送": "金谷"
+                },
+                "lunch_duty_staff": [],
+                "fixed_assignments": {
+                    "24": {
+                        "echo": [
+                            "秋田"
+                        ]
+                    }
+                },
+                "slot_notes": {},
+                "daily_adjustments": {},
+                "constraint_settings": {}
+            }
+        },
+        {
+            "name": "3月17日(火) 24枠",
+            "input_data": {
+                "target_date": "2026-03-17",
+                "patient_count": 24,
+                "off_staff": [
+                    "中野",
+                    "大島",
+                    "北野"
+                ],
+                "backup_absent": false,
+                "morning_off_staff": [],
+                "afternoon_off_staff": [],
+                "morning_off_last_slot": 12,
+                "afternoon_off_first_slot": 13,
+                "shift_overrides": {},
+                "female_slots": [
+                    1,
+                    5,
+                    8,
+                    12,
+                    14,
+                    19,
+                    20,
+                    21,
+                    23
+                ],
+                "cancelled_slots": [],
+                "blank_after_slot": 8,
+                "heart_training_slots": [
+                    5,
+                    6,
+                    8,
+                    9,
+                    15,
+                    20,
+                    21,
+                    23
+                ],
+                "heart_training_case_count": 2,
+                "observer_training": {},
+                "slot_start_times": {},
+                "slot_echo_start_times": {},
+                "slot_ecg_start_times": {},
+                "slot_unlinked_time_slots": [],
+                "duties": {
+                    "生体①": "石岡",
+                    "生体②": "金谷",
+                    "早朝エコー": "金井",
+                    "立ち上げ": "関谷",
+                    "バックアップ": "皆口",
+                    "転送": "上之平"
+                },
+                "lunch_duty_staff": [],
+                "fixed_assignments": {},
+                "slot_notes": {},
+                "daily_adjustments": {},
+                "constraint_settings": {}
+            }
+        },
+        {
+            "name": "3月18日(水) 25枠",
+            "input_data": {
+                "target_date": "2026-03-18",
+                "patient_count": 25,
+                "off_staff": [
+                    "石井",
+                    "石岡",
+                    "浅野"
+                ],
+                "backup_absent": false,
+                "morning_off_staff": [],
+                "afternoon_off_staff": [],
+                "morning_off_last_slot": 12,
+                "afternoon_off_first_slot": 13,
+                "shift_overrides": {},
+                "female_slots": [
+                    2,
+                    4,
+                    9,
+                    11,
+                    12,
+                    13,
+                    15,
+                    22
+                ],
+                "cancelled_slots": [],
+                "blank_after_slot": null,
+                "heart_training_slots": [],
+                "heart_training_case_count": 0,
+                "observer_training": {},
+                "slot_start_times": {},
+                "slot_echo_start_times": {},
+                "slot_ecg_start_times": {},
+                "slot_unlinked_time_slots": [],
+                "duties": {
+                    "生体①": "北野",
+                    "生体②": "大島",
+                    "早朝エコー": "皆口",
+                    "立ち上げ": "秋田",
+                    "バックアップ": "堀場",
+                    "転送": "金井"
+                },
+                "lunch_duty_staff": [],
+                "fixed_assignments": {},
+                "slot_notes": {},
+                "daily_adjustments": {},
+                "constraint_settings": {}
+            }
+        },
+        {
+            "name": "3月19日(木) 25枠",
+            "input_data": {
+                "target_date": "2026-03-19",
+                "patient_count": 25,
+                "off_staff": [
+                    "大橋",
+                    "皆口",
+                    "堀場"
+                ],
+                "backup_absent": false,
+                "morning_off_staff": [],
+                "afternoon_off_staff": [],
+                "morning_off_last_slot": 12,
+                "afternoon_off_first_slot": 13,
+                "shift_overrides": {
+                    "畠山": {
+                        "shift_start": "09:00",
+                        "shift_end": "13:00",
+                        "needs_break": false
+                    }
+                },
+                "female_slots": [
+                    6,
+                    7,
+                    10,
+                    12,
+                    17,
+                    18,
+                    20,
+                    22
+                ],
+                "cancelled_slots": [],
+                "blank_after_slot": null,
+                "heart_training_slots": [
+                    2,
+                    4,
+                    7,
+                    8,
+                    9,
+                    10,
+                    19,
+                    21,
+                    23
+                ],
+                "heart_training_case_count": 2,
+                "observer_training": {},
+                "slot_start_times": {},
+                "slot_echo_start_times": {},
+                "slot_ecg_start_times": {},
+                "slot_unlinked_time_slots": [],
+                "duties": {
+                    "生体①": "金井",
+                    "生体②": "金谷",
+                    "早朝エコー": "北野",
+                    "立ち上げ": "金谷",
+                    "バックアップ": "中野",
+                    "転送": "石井"
+                },
+                "lunch_duty_staff": [],
+                "fixed_assignments": {},
+                "slot_notes": {},
+                "daily_adjustments": {},
+                "constraint_settings": {}
+            }
+        },
+        {
+            "name": "3月20日(金) 24枠",
+            "input_data": {
+                "target_date": "2026-03-20",
+                "patient_count": 24,
+                "off_staff": [
+                    "秋田",
+                    "上之平",
+                    "金谷",
+                    "北野"
+                ],
+                "backup_absent": false,
+                "morning_off_staff": [],
+                "afternoon_off_staff": [],
+                "morning_off_last_slot": 12,
+                "afternoon_off_first_slot": 13,
+                "shift_overrides": {},
+                "female_slots": [
+                    1,
+                    2,
+                    5,
+                    10,
+                    14,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20
+                ],
+                "cancelled_slots": [],
+                "blank_after_slot": 8,
+                "heart_training_slots": [
+                    1,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    14,
+                    16,
+                    22,
+                    24
+                ],
+                "heart_training_case_count": 2,
+                "observer_training": {},
+                "slot_start_times": {},
+                "slot_echo_start_times": {},
+                "slot_ecg_start_times": {},
+                "slot_unlinked_time_slots": [],
+                "duties": {
+                    "生体①": "皆口",
+                    "生体②": "石岡",
+                    "早朝エコー": "石井",
+                    "立ち上げ": "中野",
+                    "バックアップ": "",
+                    "転送": "関谷"
+                },
+                "lunch_duty_staff": [],
+                "fixed_assignments": {},
+                "slot_notes": {},
+                "daily_adjustments": {},
+                "constraint_settings": {}
+            }
+        },
+        {
+            "name": "3月22日(日) 24枠",
+            "input_data": {
+                "target_date": "2026-03-22",
+                "patient_count": 24,
+                "off_staff": [
+                    "石井",
+                    "皆口",
+                    "北野",
+                    "石岡"
+                ],
+                "backup_absent": false,
+                "morning_off_staff": [],
+                "afternoon_off_staff": [],
+                "morning_off_last_slot": 12,
+                "afternoon_off_first_slot": 13,
+                "shift_overrides": {},
+                "female_slots": [
+                    1,
+                    2,
+                    4,
+                    9,
+                    11,
+                    14,
+                    15,
+                    16,
+                    18
+                ],
+                "cancelled_slots": [],
+                "blank_after_slot": 8,
+                "heart_training_slots": [],
+                "heart_training_case_count": 0,
+                "observer_training": {},
+                "slot_start_times": {},
+                "slot_echo_start_times": {},
+                "slot_ecg_start_times": {},
+                "slot_unlinked_time_slots": [],
+                "duties": {
+                    "生体①": "浅野",
+                    "生体②": "大島",
+                    "早朝エコー": "中野",
+                    "立ち上げ": "関谷",
+                    "バックアップ": "金井",
+                    "転送": "金谷"
+                },
+                "lunch_duty_staff": [],
+                "fixed_assignments": {},
+                "slot_notes": {},
+                "daily_adjustments": {},
+                "constraint_settings": {}
+            }
+        },
+        {
+            "name": "3月23日(月) 24枠",
+            "input_data": {
+                "target_date": "2026-03-23",
+                "patient_count": 24,
+                "off_staff": [
+                    "大橋",
+                    "北野",
+                    "皆口",
+                    "大島"
+                ],
+                "backup_absent": false,
+                "morning_off_staff": [],
+                "afternoon_off_staff": [],
+                "morning_off_last_slot": 12,
+                "afternoon_off_first_slot": 13,
+                "shift_overrides": {},
+                "female_slots": [
+                    3,
+                    7,
+                    19,
+                    20
+                ],
+                "cancelled_slots": [],
+                "blank_after_slot": 8,
+                "heart_training_slots": [
+                    2,
+                    4,
+                    7,
+                    16,
+                    18,
+                    21,
+                    22
+                ],
+                "heart_training_case_count": 2,
+                "observer_training": {},
+                "slot_start_times": {},
+                "slot_echo_start_times": {},
+                "slot_ecg_start_times": {},
+                "slot_unlinked_time_slots": [],
+                "duties": {
+                    "生体①": "金井",
+                    "生体②": "石岡",
+                    "早朝エコー": "堀場",
+                    "立ち上げ": "中野",
+                    "バックアップ": "上之平",
+                    "転送": "関谷"
+                },
+                "lunch_duty_staff": [],
+                "fixed_assignments": {},
+                "slot_notes": {},
+                "daily_adjustments": {},
+                "constraint_settings": {}
+            }
+        }
+    ],
+    "draft": null,
+    "last_schedule_input": null,
+    "last_schedule_result": null,
+    "optimization_history": [],
+    "current_optimization_version": null
+}
