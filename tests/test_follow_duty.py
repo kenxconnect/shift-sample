@@ -11,7 +11,7 @@ class FollowDutyTests(unittest.TestCase):
             {
                 "enabled": True,
                 "assignees": [
-                    {"source_type": "free", "staff_name": "A 石井"},
+                    {"source_type": "free", "staff_name": "A 佐藤"},
                 ],
                 "start_time": "09:10",
                 "end_time": "10:00",
@@ -48,7 +48,7 @@ class FollowDutyTests(unittest.TestCase):
                 "morning_follow": {
                     "enabled": True,
                     "assignees": [
-                        {"source_type": "free", "staff_name": "A 石井"},
+                        {"source_type": "free", "staff_name": "A 佐藤"},
                     ],
                     "start_time": "09:10",
                     "end_time": "10:00",
@@ -58,8 +58,8 @@ class FollowDutyTests(unittest.TestCase):
                 }
             },
             duties={},
-            available_staff={"A 石井"},
-            free_staff={"A 石井"},
+            available_staff={"A 佐藤"},
+            free_staff={"A 佐藤"},
         )
 
         self.assertEqual([], errors)
@@ -74,11 +74,11 @@ class FollowDutyTests(unittest.TestCase):
                         {
                             "source_type": "duty",
                             "duty_name": "生体②",
-                            "staff_name": "B 秋田",
+                            "staff_name": "B 鈴木",
                         },
                         {
                             "source_type": "free",
-                            "staff_name": "A 石井",
+                            "staff_name": "A 佐藤",
                         },
                     ],
                     "start_time": "09:10",
@@ -100,7 +100,7 @@ class FollowDutyTests(unittest.TestCase):
                     {
                         "source_type": "duty",
                         "duty_name": "バックアップ",
-                        "staff_name": "A 石井",
+                        "staff_name": "A 佐藤",
                     }
                 ],
                 "start_time": "16:10",
@@ -121,7 +121,7 @@ class FollowDutyTests(unittest.TestCase):
                         {
                             "source_type": "duty",
                             "duty_name": "生体①",
-                            "staff_name": "A 石井",
+                            "staff_name": "A 佐藤",
                         }
                     ],
                     "start_time": "16:10",

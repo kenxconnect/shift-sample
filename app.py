@@ -4947,7 +4947,7 @@ def render_shift_tab() -> None:
             selection_mode="multi",
             format_func=lambda slot: f"{slot}枠",
             key="female_slots",
-            help="女性患者の枠です。男性限定スタッフ（秋田など）は割り当て対象外になります。",
+            help="女性患者の枠です。男性限定スタッフ（鈴木など）は割り当て対象外になります。",
         )
         if st.button(
             "↺ リセット", key="reset_female_slots", help="女性患者枠の選択をリセット"
@@ -6190,7 +6190,7 @@ def render_staff_editor(
             max_value=120,
             value=int(row.get("break_minutes", default_break_minutes(display_name))),
             key=f"break_{index}",
-            help="連続休憩の目標時間（分）。標準は60分で、金谷のみ55分です。人手不足時は45分+30分に分割。",
+            help="連続休憩の目標時間（分）。標準は60分で、加藤のみ55分です。人手不足時は45分+30分に分割。",
         )
         if not (int(row["min_load"]) <= int(row["ideal_load"]) <= int(row["max_load"])):
             st.warning(
@@ -6266,10 +6266,10 @@ def render_staff_editor(
         )
 
         preferred_machine = row.get("preferred_ecg_machine")
-        if preferred_machine is None and normalize_staff_name(row["display_name"]) == "金谷":
+        if preferred_machine is None and normalize_staff_name(row["display_name"]) == "加藤":
             preferred_machine = 2
         show_preferred_machine = row.get("can_ecg", True) and (
-            normalize_staff_name(row["display_name"]) == "金谷"
+            normalize_staff_name(row["display_name"]) == "加藤"
             or preferred_machine in {1, 2}
         )
         if show_preferred_machine:
@@ -6282,7 +6282,7 @@ def render_staff_editor(
                 help="絶対固定ではなく、心電図に入れる時に優先して寄せるソフト設定です。",
             )
             pref_col2.caption(
-                "金谷はここで選んだ機械に寄るよう目的関数で優先します。エコーや休憩を挟んだ後は別機械に切り替わっても構いません。"
+                "加藤はここで選んだ機械に寄るよう目的関数で優先します。エコーや休憩を挟んだ後は別機械に切り替わっても構いません。"
             )
         else:
             row.pop("preferred_ecg_machine", None)
@@ -7058,7 +7058,7 @@ def render_constraint_guide_tab() -> None:
     with st.expander("**1-9. スタッフ別エコー枠数の上限**"):
         st.markdown(
             "- 各スタッフが 1 日に担当できるエコー枠（シングル＋ペア）は、スタッフ設定の `max_echo_frames` 以下にします\n"
-            "- 未設定時の既定値は **石岡=5 / 秋田=4 / その他=3** です\n"
+            "- 未設定時の既定値は **木村=5 / 鈴木=4 / その他=3** です\n"
             f"- 制約設定の共通上限 `max_echo_per_staff` は現在 **{max_echo_per}** です。**5 のままなら追加制限なし**、4 以下にするとスタッフ設定値との小さい方を最終上限にします"
         )
 
@@ -7213,7 +7213,7 @@ def render_constraint_guide_tab() -> None:
         (
             f"優先心電図機械の報酬 — −{preferred_ecg_machine_reward}",
             "スタッフ設定の `preferred_ecg_machine` と一致する心電図機械に入ると報酬。"
-            "現在は主に金谷の機械優先に使いますが、絶対固定ではありません。",
+            "現在は主に加藤の機械優先に使いますが、絶対固定ではありません。",
             "",
         ),
         (
@@ -7632,7 +7632,7 @@ def render_staff_settings_tab() -> None:
                     "break_preference_end": default_break_preference_end(new_name),
                     "ecg_skip_every_other": False,
                     "can_lunch_duty": True,
-                    "preferred_ecg_machine": 2 if new_name == "金谷" else None,
+                    "preferred_ecg_machine": 2 if new_name == "加藤" else None,
                     "prefers_lighter_load": False,
                     "prioritize_staff_break": False,
                     "notes": "",

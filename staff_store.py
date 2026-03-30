@@ -19,15 +19,15 @@ DEFAULT_BREAK_SETTINGS = {
     "break_preference_end": "15:00",
 }
 BREAK_DEFAULT_OVERRIDES_BY_NAME = {
-    "堀場": {
+    "伊藤": {
         "break_preference_start": "10:50",
         "break_preference_end": "14:00",
     },
-    "畠山": {
+    "渡辺": {
         "break_preference_start": "10:00",
         "break_preference_end": "14:00",
     },
-    "金谷": {
+    "加藤": {
         "break_minutes": 55,
         "allow_split_break": False,
         "break_preference_start": "10:50",
@@ -38,12 +38,12 @@ OBSERVATION_AREAS = ["心臓", "頸動脈", "甲状腺", "乳腺", "腹部"]
 PRACTICAL_TRAINING_AREAS = list(OBSERVATION_AREAS)
 MAX_OBSERVATION_DURATION_MINUTES = 180
 PREFERRED_ECG_MACHINE_OPTIONS = {1, 2}
-DEFAULT_PREFERRED_ECG_MACHINE_BY_NAME = {"金谷": 2}
-DEFAULT_LUNCH_DUTY_DISABLED_NAMES = {"金谷", "石岡", "畠山"}
-DEFAULT_STAFF_LUNCH_BREAK_PRIORITY_NAMES = {"堀場", "金谷"}
-STAFF_DISPLAY_NAME_ALIASES = {"上の平": "上之平"}
+DEFAULT_PREFERRED_ECG_MACHINE_BY_NAME = {"加藤": 2}
+DEFAULT_LUNCH_DUTY_DISABLED_NAMES = {"加藤", "木村", "渡辺"}
+DEFAULT_STAFF_LUNCH_BREAK_PRIORITY_NAMES = {"伊藤", "加藤"}
+STAFF_DISPLAY_NAME_ALIASES = {}
 DEFAULT_MAX_ECHO_FRAMES = 3
-DEFAULT_MAX_ECHO_FRAMES_BY_NAME = {"石岡": 5, "秋田": 4}
+DEFAULT_MAX_ECHO_FRAMES_BY_NAME = {"木村": 5, "鈴木": 4}
 TIME_TEXT_PATTERN = re.compile(r"^\s*(\d{1,2})\s*[:：]\s*(\d{1,2})\s*$")
 TIME_JP_PATTERN = re.compile(r"^\s*(\d{1,2})\s*時(?:\s*(\d{1,2})\s*分?)?\s*$")
 TIME_DIGIT_PATTERN = re.compile(r"^\s*(\d{3,4})\s*$")
@@ -51,7 +51,7 @@ TIME_DIGIT_PATTERN = re.compile(r"^\s*(\d{3,4})\s*$")
 DEFAULT_STAFF_CONFIG = [
     {
         "id": "A",
-        "display_name": "石井",
+        "display_name": "佐藤",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -76,7 +76,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "B",
-        "display_name": "秋田",
+        "display_name": "鈴木",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -101,7 +101,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "C",
-        "display_name": "大橋",
+        "display_name": "高橋",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -126,7 +126,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "D",
-        "display_name": "中野",
+        "display_name": "田中",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -151,7 +151,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "E",
-        "display_name": "堀場",
+        "display_name": "伊藤",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -177,7 +177,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "F",
-        "display_name": "畠山",
+        "display_name": "渡辺",
         "is_active": True,
         "is_free_eligible": False,
         "can_ecg": True,
@@ -202,7 +202,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "G",
-        "display_name": "上之平",
+        "display_name": "山本",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -227,7 +227,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "H",
-        "display_name": "関谷",
+        "display_name": "中村",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -252,7 +252,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "I",
-        "display_name": "金井",
+        "display_name": "小林",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -277,7 +277,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "J",
-        "display_name": "金谷",
+        "display_name": "加藤",
         "is_active": True,
         "is_free_eligible": False,
         "can_ecg": True,
@@ -304,7 +304,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "K",
-        "display_name": "皆口",
+        "display_name": "吉田",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -329,7 +329,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "L",
-        "display_name": "北野",
+        "display_name": "山田",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -354,7 +354,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "M",
-        "display_name": "大島",
+        "display_name": "松本",
         "is_active": True,
         "is_free_eligible": False,
         "can_ecg": True,
@@ -379,7 +379,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "N",
-        "display_name": "浅野",
+        "display_name": "井上",
         "is_active": True,
         "is_free_eligible": True,
         "can_ecg": True,
@@ -404,7 +404,7 @@ DEFAULT_STAFF_CONFIG = [
     },
     {
         "id": "O",
-        "display_name": "石岡",
+        "display_name": "木村",
         "is_active": True,
         "is_free_eligible": False,
         "can_ecg": True,

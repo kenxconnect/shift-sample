@@ -43,9 +43,9 @@ def sample_input_data() -> dict:
         "slot_ecg_start_times": {},
         "slot_unlinked_time_slots": [],
         "duties": {
-            "生体①": "A 石井",
-            "生体②": "B 秋田",
-            "早朝エコー": "C 大橋",
+            "生体①": "A 佐藤",
+            "生体②": "B 鈴木",
+            "早朝エコー": "C 高橋",
             "立ち上げ": "",
             "バックアップ": "",
             "転送": "",
@@ -66,10 +66,10 @@ def sample_result() -> dict:
             {
                 "枠": 1,
                 "患者性別": "男性",
-                "心電図担当": "B 秋田",
+                "心電図担当": "B 鈴木",
                 "心電図開始": "09:00",
                 "心電図機械": "1",
-                "エコー担当": "A 石井",
+                "エコー担当": "A 佐藤",
                 "エコー開始": "09:25",
                 "エコー機械": "1",
                 "エコー領域": "心臓・頸動脈・甲状腺・腹部",
@@ -78,30 +78,30 @@ def sample_result() -> dict:
             {
                 "枠": 2,
                 "患者性別": "女性",
-                "心電図担当": "O 石岡",
+                "心電図担当": "O 木村",
                 "心電図開始": "09:15",
                 "心電図機械": "2",
-                "エコー担当": "C 大橋 / O 石岡",
+                "エコー担当": "C 高橋 / O 木村",
                 "エコー開始": "09:40",
                 "エコー機械": "2",
-                "エコー領域": "C 大橋:心臓・頸動脈 / O 石岡:甲状腺・乳腺・腹部",
+                "エコー領域": "C 高橋:心臓・頸動脈 / O 木村:甲状腺・乳腺・腹部",
                 "メモ": "2人担当",
             },
         ],
         "loads": {
-            "A 石井": 4,
-            "B 秋田": 1,
-            "C 大橋": 2,
-            "O 石岡": 4,
+            "A 佐藤": 4,
+            "B 鈴木": 1,
+            "C 高橋": 2,
+            "O 木村": 4,
         },
         "targets": {
-            "A 石井": 4,
-            "B 秋田": 1,
-            "C 大橋": 2,
-            "O 石岡": 4,
+            "A 佐藤": 4,
+            "B 鈴木": 1,
+            "C 高橋": 2,
+            "O 木村": 4,
         },
-        "breaks": {"A 石井": set(), "B 秋田": set(), "C 大橋": set(), "O 石岡": set()},
-        "break_intervals": {"A 石井": (720, 785)},
+        "breaks": {"A 佐藤": set(), "B 鈴木": set(), "C 高橋": set(), "O 木村": set()},
+        "break_intervals": {"A 佐藤": (720, 785)},
         "lunch_duty": "",
         "lunch_duty_staff": [],
         "two_person_cases": 1,
@@ -111,8 +111,8 @@ def sample_result() -> dict:
         "break_preference_violations": [],
         "pair_task_intervals": {
             2: {
-                "C 大橋": (580, 610),
-                "O 石岡": (610, 655),
+                "C 高橋": (580, 610),
+                "O 木村": (610, 655),
             }
         },
     }
@@ -124,20 +124,20 @@ def sample_observer_result() -> dict:
         {
             "枠": 2,
             "患者性別": "女性",
-            "心電図担当": "B 秋田",
+            "心電図担当": "B 鈴木",
             "心電図開始": "09:15",
             "心電図機械": "2",
-            "エコー担当": "C 大橋 / O 石岡",
+            "エコー担当": "C 高橋 / O 木村",
             "エコー開始": "09:40",
             "エコー機械": "2",
-            "エコー領域": "C 大橋:心臓・頸動脈・甲状腺・乳腺・腹部 / O 石岡:心(見学)",
+            "エコー領域": "C 高橋:心臓・頸動脈・甲状腺・乳腺・腹部 / O 木村:心(見学)",
             "メモ": "見学あり",
         }
     ]
     result["pair_task_intervals"] = {
         2: {
-            "C 大橋": (580, 670),
-            "O 石岡": (580, 625),
+            "C 高橋": (580, 670),
+            "O 木村": (580, 625),
         }
     }
     return result
@@ -151,7 +151,7 @@ def sample_follow_input_data() -> dict:
             {
                 "source_type": "duty",
                 "duty_name": "生体②",
-                "staff_name": "B 秋田",
+                "staff_name": "B 鈴木",
             }
         ],
         "start_time": "09:10",
@@ -180,9 +180,9 @@ def sample_solver_input_data() -> dict:
         "slot_ecg_start_times": {},
         "slot_unlinked_time_slots": [],
         "duties": {
-            "生体①": "石井",
-            "生体②": "秋田",
-            "早朝エコー": "大橋",
+            "生体①": "佐藤",
+            "生体②": "鈴木",
+            "早朝エコー": "高橋",
             "立ち上げ": "",
             "バックアップ": "",
             "転送": "",
@@ -242,7 +242,7 @@ def with_evening_follow(input_data: dict, duty_name: str, staff_name: str) -> di
 
 
 def roundtrip_pair_input_data() -> dict:
-    active_names = {"石井", "大橋", "皆口", "上之平"}
+    active_names = {"佐藤", "高橋", "吉田", "山本"}
     return {
         "target_date": "2026-03-15",
         "patient_count": 2,
@@ -261,9 +261,9 @@ def roundtrip_pair_input_data() -> dict:
         "slot_ecg_start_times": {},
         "slot_unlinked_time_slots": [],
         "duties": {
-            "生体①": "上之平",
-            "生体②": "大橋",
-            "早朝エコー": "石井",
+            "生体①": "山本",
+            "生体②": "高橋",
+            "早朝エコー": "佐藤",
             "立ち上げ": "",
             "バックアップ": "",
             "転送": "",
@@ -286,10 +286,10 @@ def roundtrip_pair_result() -> dict:
             {
                 "枠": 1,
                 "患者性別": "男性",
-                "心電図担当": "上之平",
+                "心電図担当": "山本",
                 "心電図開始": "09:00",
                 "心電図機械": "1",
-                "エコー担当": "石井",
+                "エコー担当": "佐藤",
                 "エコー開始": "09:25",
                 "エコー機械": "1",
                 "エコー領域": "心臓・頸動脈・甲状腺・腹部",
@@ -298,20 +298,20 @@ def roundtrip_pair_result() -> dict:
             {
                 "枠": 2,
                 "患者性別": "女性",
-                "心電図担当": "上之平",
+                "心電図担当": "山本",
                 "心電図開始": "09:15",
                 "心電図機械": "2",
-                "エコー担当": "大橋 / 皆口",
+                "エコー担当": "高橋 / 吉田",
                 "エコー開始": "09:40",
                 "エコー機械": "2",
-                "エコー領域": "大橋:心臓・頸動脈 / 皆口:甲状腺・乳腺・腹部",
+                "エコー領域": "高橋:心臓・頸動脈 / 吉田:甲状腺・乳腺・腹部",
                 "メモ": "2人担当",
             },
         ],
-        "loads": {"石井": 4, "上之平": 2, "大橋": 2, "皆口": 3},
-        "targets": {"石井": 4, "上之平": 2, "大橋": 2, "皆口": 3},
-        "breaks": {"石井": [], "上之平": [], "大橋": [], "皆口": []},
-        "break_intervals": {"皆口": (655, 720)},
+        "loads": {"佐藤": 4, "山本": 2, "高橋": 2, "吉田": 3},
+        "targets": {"佐藤": 4, "山本": 2, "高橋": 2, "吉田": 3},
+        "breaks": {"佐藤": [], "山本": [], "高橋": [], "吉田": []},
+        "break_intervals": {"吉田": (655, 720)},
         "lunch_duty": "",
         "lunch_duty_staff": [],
         "two_person_cases": 1,
@@ -321,8 +321,8 @@ def roundtrip_pair_result() -> dict:
         "break_preference_violations": [],
         "pair_task_intervals": {
             2: {
-                "大橋": (580, 610),
-                "皆口": (610, 655),
+                "高橋": (580, 610),
+                "吉田": (610, 655),
             }
         },
     }
@@ -366,8 +366,8 @@ class SmokeTests(unittest.TestCase):
 
     def test_print_staff_gantt_df_keeps_observer_slot_finish_fixed(self) -> None:
         df = build_print_staff_gantt_df(sample_observer_result(), sample_input_data())
-        observer_row = df[df["担当者"] == "O 石岡"].iloc[0]
-        mentor_row = df[df["担当者"] == "C 大橋"].iloc[0]
+        observer_row = df[df["担当者"] == "O 木村"].iloc[0]
+        mentor_row = df[df["担当者"] == "C 高橋"].iloc[0]
 
         self.assertEqual(observer_row["時間帯"], "09:40-10:10")
         self.assertEqual(mentor_row["時間帯"], "09:40-10:55")
@@ -380,7 +380,7 @@ class SmokeTests(unittest.TestCase):
 
     def test_print_slot_gantt_html_shows_area_abbreviations(self) -> None:
         html = build_print_slot_gantt_html(sample_result(), sample_input_data())
-        self.assertIn("石井 心・頸・甲・腹", html)
+        self.assertIn("佐藤 心・頸・甲・腹", html)
         self.assertNotIn(">ECHO<", html)
 
     def test_print_staff_gantt_html_shows_follow_task(self) -> None:
@@ -417,7 +417,7 @@ class SmokeTests(unittest.TestCase):
         self.assertEqual(normalized[0]["break_preference_end"], "14:05")
 
         specs = specs_from_config(broken)
-        spec = specs["石井"]
+        spec = specs["佐藤"]
         self.assertEqual(spec.shift_start, "09:00")
         self.assertEqual(spec.shift_end, "16:30")
         self.assertEqual(spec.break_preference_start, "11:30")
@@ -426,9 +426,9 @@ class SmokeTests(unittest.TestCase):
     def test_missing_break_settings_use_name_based_defaults(self) -> None:
         normalized = normalize_staff_config(
             [
-                {"id": "A", "display_name": "石井"},
-                {"id": "F", "display_name": "畠山"},
-                {"id": "J", "display_name": "金谷"},
+                {"id": "A", "display_name": "佐藤"},
+                {"id": "F", "display_name": "渡辺"},
+                {"id": "J", "display_name": "加藤"},
             ]
         )
 
@@ -467,16 +467,16 @@ class SmokeTests(unittest.TestCase):
         self.assertEqual([], issues)
 
     def test_collect_constraint_issues_detects_follow_overlap(self) -> None:
-        input_data = with_morning_follow(sample_solver_input_data(), "生体②", "秋田")
+        input_data = with_morning_follow(sample_solver_input_data(), "生体②", "鈴木")
         result = {
             "table": [
                 {
                     "枠": 1,
                     "患者性別": "男性",
-                    "心電図担当": "秋田",
+                    "心電図担当": "鈴木",
                     "心電図開始": "09:00",
                     "心電図機械": "1",
-                    "エコー担当": "石井",
+                    "エコー担当": "佐藤",
                     "エコー開始": "09:25",
                     "エコー機械": "1",
                     "エコー領域": "心臓・頸動脈・甲状腺・腹部",
@@ -485,30 +485,30 @@ class SmokeTests(unittest.TestCase):
                 {
                     "枠": 2,
                     "患者性別": "男性",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "09:15",
                     "心電図機械": "2",
-                    "エコー担当": "大橋 / 石岡",
+                    "エコー担当": "高橋 / 木村",
                     "エコー開始": "09:40",
                     "エコー機械": "2",
-                    "エコー領域": "大橋:心臓・頸動脈 / 石岡:甲状腺・腹部",
+                    "エコー領域": "高橋:心臓・頸動脈 / 木村:甲状腺・腹部",
                     "メモ": "2人担当",
                 },
             ],
             "loads": {
-                "石井": 4,
-                "秋田": 1,
-                "大橋": 2,
-                "石岡": 3,
+                "佐藤": 4,
+                "鈴木": 1,
+                "高橋": 2,
+                "木村": 3,
             },
             "targets": {
-                "石井": 4,
-                "秋田": 1,
-                "大橋": 2,
-                "石岡": 3,
+                "佐藤": 4,
+                "鈴木": 1,
+                "高橋": 2,
+                "木村": 3,
             },
-            "breaks": {"石井": set(), "秋田": set(), "大橋": set(), "石岡": set()},
-            "break_intervals": {"石井": (720, 785)},
+            "breaks": {"佐藤": set(), "鈴木": set(), "高橋": set(), "木村": set()},
+            "break_intervals": {"佐藤": (720, 785)},
             "lunch_duty": "",
             "lunch_duty_staff": [],
             "two_person_cases": 1,
@@ -518,8 +518,8 @@ class SmokeTests(unittest.TestCase):
             "break_preference_violations": [],
             "pair_task_intervals": {
                 2: {
-                    "大橋": (580, 610),
-                    "石岡": (610, 655),
+                    "高橋": (580, 610),
+                    "木村": (610, 655),
                 }
             },
         }
@@ -531,79 +531,79 @@ class SmokeTests(unittest.TestCase):
 
     def test_morning_follow_releases_biotai2_ecg_slot_for_other_staff(self) -> None:
         input_data = sample_solver_input_data()
-        follow_input = with_morning_follow(input_data, "生体②", "秋田")
+        follow_input = with_morning_follow(input_data, "生体②", "鈴木")
         specs = specs_from_config(DEFAULT_STAFF_CONFIG)
         slot2 = build_patient_slots_from_input(input_data)[1]
 
-        self.assertTrue(is_ecg_allowed("秋田", slot2, specs, {}, input_data, False, False))
+        self.assertTrue(is_ecg_allowed("鈴木", slot2, specs, {}, input_data, False, False))
         self.assertFalse(
-            is_ecg_allowed("秋田", slot2, specs, {}, follow_input, False, False)
+            is_ecg_allowed("鈴木", slot2, specs, {}, follow_input, False, False)
         )
         self.assertTrue(
-            is_ecg_allowed("石井", slot2, specs, {}, follow_input, False, False)
+            is_ecg_allowed("佐藤", slot2, specs, {}, follow_input, False, False)
         )
 
     def test_morning_follow_releases_early_echo_slot_for_other_staff(self) -> None:
         input_data = sample_solver_input_data()
-        follow_input = with_morning_follow(input_data, "早朝エコー", "大橋")
+        follow_input = with_morning_follow(input_data, "早朝エコー", "高橋")
         specs = specs_from_config(DEFAULT_STAFF_CONFIG)
         slot1 = build_patient_slots_from_input(input_data)[0]
 
         self.assertTrue(
-            is_echo_allowed("大橋", slot1, specs, {}, input_data, False, False)
+            is_echo_allowed("高橋", slot1, specs, {}, input_data, False, False)
         )
         self.assertFalse(
-            is_echo_allowed("大橋", slot1, specs, {}, follow_input, False, False)
+            is_echo_allowed("高橋", slot1, specs, {}, follow_input, False, False)
         )
         self.assertTrue(
-            is_echo_allowed("石井", slot1, specs, {}, follow_input, False, False)
+            is_echo_allowed("佐藤", slot1, specs, {}, follow_input, False, False)
         )
 
     def test_soft_min_target_handles_follow_and_priority_duty_consistently(self) -> None:
         input_data = sample_solver_input_data()
-        follow_input = with_morning_follow(input_data, "早朝エコー", "大橋")
+        follow_input = with_morning_follow(input_data, "早朝エコー", "高橋")
         specs = specs_from_config(DEFAULT_STAFF_CONFIG)
 
         self.assertEqual(
-            soft_min_target("大橋", specs["大橋"], input_data, specs["大橋"].ideal_load),
+            soft_min_target("高橋", specs["高橋"], input_data, specs["高橋"].ideal_load),
             soft_min_target(
-                "大橋", specs["大橋"], follow_input, specs["大橋"].ideal_load
+                "高橋", specs["高橋"], follow_input, specs["高橋"].ideal_load
             ),
         )
 
     def test_evening_follow_blocks_late_echo_assignment_after_prep_start(self) -> None:
         input_data = sample_solver_input_data()
-        evening_input = with_evening_follow(input_data, "早朝エコー", "大橋")
+        evening_input = with_evening_follow(input_data, "早朝エコー", "高橋")
         specs = specs_from_config(DEFAULT_STAFF_CONFIG)
         slot25 = build_patient_slots_from_input(evening_input)[24]
 
         self.assertTrue(
-            is_echo_allowed("大橋", slot25, specs, {}, input_data, False, False)
+            is_echo_allowed("高橋", slot25, specs, {}, input_data, False, False)
         )
         self.assertFalse(
-            is_echo_allowed("大橋", slot25, specs, {}, evening_input, False, False)
+            is_echo_allowed("高橋", slot25, specs, {}, evening_input, False, False)
         )
 
     def test_collect_constraint_issues_warns_for_evening_follow_overlap(self) -> None:
-        input_data = with_evening_follow(sample_solver_input_data(), "早朝エコー", "大橋")
+        input_data = with_evening_follow(sample_solver_input_data(), "早朝エコー", "高橋")
         result = {
             "table": [
                 {
                     "枠": 25,
                     "患者性別": "男性",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "15:15",
                     "心電図機械": "1",
-                    "エコー担当": "大橋",
+                    "エコー担当": "高橋",
                     "エコー開始": "15:40",
                     "エコー機械": "1",
                     "エコー領域": "心臓・頸動脈・甲状腺・腹部",
                     "メモ": "",
                 }
             ],
-            "loads": {"石井": 1, "大橋": 4},
-            "targets": {"石井": 1, "大橋": 4},
-            "breaks": {"石井": set(), "大橋": set()},
+            "loads": {"佐藤": 1, "高橋": 4},
+            "targets": {"佐藤": 1, "高橋": 4},
+            "breaks": {"佐藤": set(), "高橋": set()},
             "break_intervals": {},
             "lunch_duty": "",
             "lunch_duty_staff": [],
@@ -622,25 +622,25 @@ class SmokeTests(unittest.TestCase):
         self.assertTrue(any(issue["レベル"] == "warning" for issue in issues))
 
     def test_collect_constraint_issues_warns_for_evening_follow_late_echo_bias(self) -> None:
-        input_data = with_evening_follow(sample_solver_input_data(), "生体①", "石井")
+        input_data = with_evening_follow(sample_solver_input_data(), "生体①", "佐藤")
         result = {
             "table": [
                 {
                     "枠": 20,
                     "患者性別": "男性",
-                    "心電図担当": "秋田",
+                    "心電図担当": "鈴木",
                     "心電図開始": "13:45",
                     "心電図機械": "1",
-                    "エコー担当": "石井",
+                    "エコー担当": "佐藤",
                     "エコー開始": "14:10",
                     "エコー機械": "1",
                     "エコー領域": "心臓・頸動脈・甲状腺・腹部",
                     "メモ": "",
                 }
             ],
-            "loads": {"秋田": 1, "石井": 4},
-            "targets": {"秋田": 1, "石井": 4},
-            "breaks": {"秋田": set(), "石井": set()},
+            "loads": {"鈴木": 1, "佐藤": 4},
+            "targets": {"鈴木": 1, "佐藤": 4},
+            "breaks": {"鈴木": set(), "佐藤": set()},
             "break_intervals": {},
             "lunch_duty": "",
             "lunch_duty_staff": [],
@@ -664,7 +664,7 @@ class SmokeTests(unittest.TestCase):
             {
                 "分類": "フォロー業務",
                 "対象": "3枠",
-                "内容": "3枠: 関谷 のエコー担当が朝フォロー業務と競合しています。",
+                "内容": "3枠: 中村 のエコー担当が朝フォロー業務と競合しています。",
                 "レベル": "error",
             },
             {
@@ -686,7 +686,7 @@ class SmokeTests(unittest.TestCase):
                 {
                     "分類": "フォロー業務",
                     "対象": "3枠",
-                    "内容": "3枠: 関谷 のエコー担当が朝フォロー業務と競合しています。",
+                    "内容": "3枠: 中村 のエコー担当が朝フォロー業務と競合しています。",
                     "レベル": "error",
                 }
             ]
@@ -702,7 +702,7 @@ class SmokeTests(unittest.TestCase):
     def test_refresh_result_for_view_recomputes_stale_warnings(self) -> None:
         input_data = roundtrip_pair_input_data()
         stale_result = to_jsonable(roundtrip_pair_result())
-        stale_result["violations"] = ["2枠: 皆口 のエコー担当と休憩時間が重なっています。"]
+        stale_result["violations"] = ["2枠: 吉田 のエコー担当と休憩時間が重なっています。"]
         stale_result["violation_details"] = [
             {
                 "分類": "休憩",

@@ -57,9 +57,9 @@ def _mixed_weekly_input(staff_config: list[dict]) -> dict:
         "areas": ["心臓"],
     }
     input_data["observer_training"] = {
-        "石岡": {"心臓": {"slots": [3, 4, 6], "count": 1}}
+        "木村": {"心臓": {"slots": [3, 4, 6], "count": 1}}
     }
-    input_data["lunch_duty_staff"] = ["上之平"]
+    input_data["lunch_duty_staff"] = ["山本"]
     input_data["slot_echo_start_times"] = {
         "17": "14:15",
         "18": "14:40",
@@ -81,7 +81,7 @@ def _reschedule_roundtrip_input(staff_config: list[dict]) -> dict:
     input_data = {
         "target_date": "2026-03-21",
         "patient_count": 22,
-        "off_staff": ["大橋", "皆口"],
+        "off_staff": ["高橋", "吉田"],
         "morning_off_staff": [],
         "afternoon_off_staff": [],
         "morning_off_last_slot": 12,

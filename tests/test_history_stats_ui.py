@@ -258,7 +258,7 @@ class TestHistoryAndStatsUi(unittest.TestCase):
     ) -> dict:
         input_data = {
             "target_date": target_date,
-            "staff_config": [{"display_name": "石井"}, {"display_name": "秋田"}],
+            "staff_config": [{"display_name": "佐藤"}, {"display_name": "鈴木"}],
             "duties": {"生体①": ecg_name},
         }
         result = {
@@ -272,8 +272,8 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                     "メモ": "",
                 }
             ],
-            "loads": {"石井": version + 1, "秋田": 3},
-            "targets": {"石井": 3, "秋田": 3},
+            "loads": {"佐藤": version + 1, "鈴木": 3},
+            "targets": {"佐藤": 3, "鈴木": 3},
             "lunch_duty": ecg_name,
             "two_person_cases": version - 1,
             "lunch_duty_staff": [ecg_name],
@@ -300,16 +300,16 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                 target_date="2026-03-21",
                 version=1,
                 saved_at="2026-03-21 09:00",
-                ecg_name="石井",
-                echo_name="秋田",
+                ecg_name="佐藤",
+                echo_name="鈴木",
                 fairness_score=87,
             ),
             self._history_record(
                 target_date="2026-03-21",
                 version=2,
                 saved_at="2026-03-21 10:15",
-                ecg_name="秋田",
-                echo_name="石井",
+                ecg_name="鈴木",
+                echo_name="佐藤",
                 fairness_score=92,
             ),
         ]
@@ -343,9 +343,9 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                     "枠": 1,
                     "患者性別": "男性",
                     "心電図開始": "09:00",
-                    "心電図担当": "秋田",
+                    "心電図担当": "鈴木",
                     "エコー開始": "09:25",
-                    "エコー担当": "石井",
+                    "エコー担当": "佐藤",
                     "エコー領域": "心臓",
                     "メモ": "",
                 }
@@ -362,8 +362,8 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                     {
                         "枠": 1,
                         "変更項目": "心電図",
-                        "変更前 心電図": "石井",
-                        "変更後 心電図": "秋田",
+                        "変更前 心電図": "佐藤",
+                        "変更後 心電図": "鈴木",
                     }
                 ]
             ),
@@ -395,32 +395,32 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                 target_date="2026-03-18",
                 version=1,
                 saved_at="2026-03-18 18:00",
-                ecg_name="石井",
-                echo_name="秋田",
+                ecg_name="佐藤",
+                echo_name="鈴木",
                 fairness_score=84,
             ),
             self._history_record(
                 target_date="2026-03-19",
                 version=1,
                 saved_at="2026-03-19 18:00",
-                ecg_name="石井",
-                echo_name="秋田",
+                ecg_name="佐藤",
+                echo_name="鈴木",
                 fairness_score=86,
             ),
             self._history_record(
                 target_date="2026-03-20",
                 version=1,
                 saved_at="2026-03-20 18:00",
-                ecg_name="秋田",
-                echo_name="石井",
+                ecg_name="鈴木",
+                echo_name="佐藤",
                 fairness_score=90,
             ),
             self._history_record(
                 target_date="2026-03-21",
                 version=1,
                 saved_at="2026-03-21 18:00",
-                ecg_name="秋田",
-                echo_name="石井",
+                ecg_name="鈴木",
+                echo_name="佐藤",
                 fairness_score=93,
             ),
         ]
@@ -453,7 +453,7 @@ class TestHistoryAndStatsUi(unittest.TestCase):
         summary_df = pd.DataFrame(
             [
                 {
-                    "担当者": "石井",
+                    "担当者": "佐藤",
                     "保存日数": 2,
                     "平均領域数": 4.5,
                     "最小領域数": 4,
@@ -464,7 +464,7 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                     "直近領域数": 5,
                 },
                 {
-                    "担当者": "秋田",
+                    "担当者": "鈴木",
                     "保存日数": 2,
                     "平均領域数": 3.5,
                     "最小領域数": 3,
@@ -479,7 +479,7 @@ class TestHistoryAndStatsUi(unittest.TestCase):
         comparison_df = pd.DataFrame(
             [
                 {
-                    "担当者": "石井",
+                    "担当者": "佐藤",
                     "平均領域数": 4.5,
                     "前期間平均領域数": 3.5,
                     "前期間差": 1.0,
@@ -490,7 +490,7 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                     "平均休憩分": 65,
                 },
                 {
-                    "担当者": "秋田",
+                    "担当者": "鈴木",
                     "平均領域数": 3.5,
                     "前期間平均領域数": 4.0,
                     "前期間差": -0.5,
@@ -529,7 +529,7 @@ class TestHistoryAndStatsUi(unittest.TestCase):
             ]
         )
         fake_st = _FakeStreamlit(
-            selects={"担当者を選ぶ": "石井"},
+            selects={"担当者を選ぶ": "佐藤"},
             dates={
                 "stats_start": date(2026, 3, 20),
                 "stats_end": date(2026, 3, 21),
@@ -545,8 +545,8 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                     "avg_range": 2.0,
                     "avg_two_person": 1.5,
                     "avg_violations": 0.3,
-                    "busiest": "石井",
-                    "lightest": "秋田",
+                    "busiest": "佐藤",
+                    "lightest": "鈴木",
                 },
                 {
                     "days": 4,
@@ -554,8 +554,8 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                     "avg_range": 2.0,
                     "avg_two_person": 1.5,
                     "avg_violations": 0.3,
-                    "busiest": "石井",
-                    "lightest": "秋田",
+                    "busiest": "佐藤",
+                    "lightest": "鈴木",
                 },
                 {
                     "days": 2,
@@ -563,8 +563,8 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                     "avg_range": 1.5,
                     "avg_two_person": 1.5,
                     "avg_violations": 0.0,
-                    "busiest": "石井",
-                    "lightest": "秋田",
+                    "busiest": "佐藤",
+                    "lightest": "鈴木",
                 },
             ]
         )
@@ -592,7 +592,7 @@ class TestHistoryAndStatsUi(unittest.TestCase):
                 {
                     "level": "warning",
                     "title": "負担が重めの担当者",
-                    "body": "石井 は期間平均でやや重めです。",
+                    "body": "佐藤 は期間平均でやや重めです。",
                 }
             ],
         ), patch.object(

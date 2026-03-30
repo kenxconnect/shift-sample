@@ -690,7 +690,7 @@ solver への反映:
 - 結果検証: `scheduler.py` / `collect_constraint_issues()`  
   検索キー: `男性専用`
 
-現行デフォルトでは `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `B: 秋田` が該当する。
+現行デフォルトでは `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `B: 鈴木` が該当する。
 
 ---
 
@@ -703,27 +703,27 @@ solver への反映:
 
 | ID | 表示名 | 主な特徴 | 参照 |
 |---|---|---|---|
-| A | 石井 | 全 Echo 領域対応、長時間勤務、max_load=15 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="A"` |
-| B | 秋田 | `male_only=True`、全 Echo 領域対応 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="B"` |
-| C | 大橋 | 標準フリー枠、全 Echo 領域対応 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="C"` |
-| D | 中野 | min_load=11 とやや重めの基準 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="D"` |
-| E | 堀場 | `prefers_lighter_load=True`、休憩優先 (`prioritize_staff_break=True`) | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="E"` |
-| F | 畠山 | `is_free_eligible=False`、時短 (`09:00-15:10`)、昼当番不可 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="F"` |
-| G | 上之平 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="G"` |
-| H | 関谷 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="H"` |
-| I | 金井 | 全領域、max_load=15 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="I"` |
-| J | 金谷 | Echo 領域なし=ECG 専任、`ecg_skip_every_other=True`、優先機械2、55分休憩固定、昼当番不可 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="J"` |
-| K | 皆口 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="K"` |
-| L | 北野 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="L"` |
-| M | 大島 | `echo_areas=["心臓","頸動脈","甲状腺"]` の制限付き Echo、非フリー | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="M"` |
-| N | 浅野 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="N"` |
-| O | 石岡 | 心臓不可、`observer_areas=["心臓"]`、非フリー、昼当番不可 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="O"` |
+| A | 佐藤 | 全 Echo 領域対応、長時間勤務、max_load=15 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="A"` |
+| B | 鈴木 | `male_only=True`、全 Echo 領域対応 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="B"` |
+| C | 高橋 | 標準フリー枠、全 Echo 領域対応 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="C"` |
+| D | 田中 | min_load=11 とやや重めの基準 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="D"` |
+| E | 伊藤 | `prefers_lighter_load=True`、休憩優先 (`prioritize_staff_break=True`) | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="E"` |
+| F | 渡辺 | `is_free_eligible=False`、時短 (`09:00-15:10`)、昼当番不可 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="F"` |
+| G | 山本 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="G"` |
+| H | 中村 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="H"` |
+| I | 小林 | 全領域、max_load=15 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="I"` |
+| J | 加藤 | Echo 領域なし=ECG 専任、`ecg_skip_every_other=True`、優先機械2、55分休憩固定、昼当番不可 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="J"` |
+| K | 吉田 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="K"` |
+| L | 山田 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="L"` |
+| M | 松本 | `echo_areas=["心臓","頸動脈","甲状腺"]` の制限付き Echo、非フリー | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="M"` |
+| N | 井上 | 標準フリー枠 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="N"` |
+| O | 木村 | 心臓不可、`observer_areas=["心臓"]`、非フリー、昼当番不可 | `staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="O"` |
 
 スタッフごとの業務ロジックへの影響例:
 
-- `J 金谷` は ECG 専任扱いになり、1枠おきパターン制約が乗る (`scheduler.py` / `_ecg_only_start_slot()`, `build_schedule_model()`)
-- `M 大島` と `O 石岡` は `scheduler.py` / `_capability_partition()` の対象になりやすい
-- `O 石岡` は心臓を自分で実施できず、見学扱いでペア参加する (`staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="O"`, `scheduler.py` / `pair_area_partition()`)
+- `J 加藤` は ECG 専任扱いになり、1枠おきパターン制約が乗る (`scheduler.py` / `_ecg_only_start_slot()`, `build_schedule_model()`)
+- `M 松本` と `O 木村` は `scheduler.py` / `_capability_partition()` の対象になりやすい
+- `O 木村` は心臓を自分で実施できず、見学扱いでペア参加する (`staff_store.py` / `DEFAULT_STAFF_CONFIG` の `id="O"`, `scheduler.py` / `pair_area_partition()`)
 
 ### 7.2 デフォルト設定値
 
@@ -736,14 +736,14 @@ solver への反映:
 | 通常休憩希望 | `11:00-15:00` | `staff_store.py` / `DEFAULT_BREAK_SETTINGS`, `default_break_preference_start()`, `default_break_preference_end()` |
 | 分割休憩 | 許可 | `staff_store.py` / `DEFAULT_BREAK_SETTINGS`, `default_allow_split_break()` |
 | 既定 max_echo_frames | 3 | `staff_store.py` / `default_max_echo_frames()` |
-| 金谷の優先 ECG 機械 | 2 | `staff_store.py` / `default_preferred_ecg_machine()` |
-| 昼当番 default 不可 | 金谷・石岡・畠山 | `staff_store.py` / `default_can_lunch_duty()` |
+| 加藤の優先 ECG 機械 | 2 | `staff_store.py` / `default_preferred_ecg_machine()` |
+| 昼当番 default 不可 | 加藤・木村・渡辺 | `staff_store.py` / `default_can_lunch_duty()` |
 
 休憩の個別 default override:
 
-- 堀場: `10:50-14:00`
-- 畠山: `10:00-14:00`
-- 金谷: 55分、分割不可、`10:50-14:00`
+- 伊藤: `10:50-14:00`
+- 渡辺: `10:00-14:00`
+- 加藤: 55分、分割不可、`10:50-14:00`
 
 根拠: `staff_store.py` / `DEFAULT_BREAK_SETTINGS`, `default_break_settings()`
 

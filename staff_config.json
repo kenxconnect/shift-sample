@@ -1,7 +1,7 @@
 [
   {
     "id": "A",
-    "display_name": "石井",
+    "display_name": "佐藤",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -28,7 +28,7 @@
   },
   {
     "id": "B",
-    "display_name": "秋田",
+    "display_name": "鈴木",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -55,7 +55,7 @@
   },
   {
     "id": "C",
-    "display_name": "大橋",
+    "display_name": "高橋",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -82,7 +82,7 @@
   },
   {
     "id": "D",
-    "display_name": "中野",
+    "display_name": "田中",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -109,7 +109,7 @@
   },
   {
     "id": "E",
-    "display_name": "堀場",
+    "display_name": "伊藤",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -136,7 +136,7 @@
   },
   {
     "id": "F",
-    "display_name": "畠山",
+    "display_name": "渡辺",
     "is_active": true,
     "is_free_eligible": false,
     "can_ecg": true,
@@ -164,7 +164,7 @@
   },
   {
     "id": "G",
-    "display_name": "上之平",
+    "display_name": "山本",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -191,7 +191,7 @@
   },
   {
     "id": "H",
-    "display_name": "関谷",
+    "display_name": "中村",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -218,7 +218,7 @@
   },
   {
     "id": "I",
-    "display_name": "金井",
+    "display_name": "小林",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -245,7 +245,7 @@
   },
   {
     "id": "J",
-    "display_name": "金谷",
+    "display_name": "加藤",
     "is_active": true,
     "is_free_eligible": false,
     "can_ecg": true,
@@ -267,7 +267,7 @@
   },
   {
     "id": "K",
-    "display_name": "皆口",
+    "display_name": "吉田",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -294,7 +294,7 @@
   },
   {
     "id": "L",
-    "display_name": "北野",
+    "display_name": "山田",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -321,7 +321,7 @@
   },
   {
     "id": "M",
-    "display_name": "大島",
+    "display_name": "松本",
     "is_active": true,
     "is_free_eligible": false,
     "can_ecg": true,
@@ -346,7 +346,7 @@
   },
   {
     "id": "N",
-    "display_name": "浅野",
+    "display_name": "井上",
     "is_active": true,
     "is_free_eligible": true,
     "can_ecg": true,
@@ -373,7 +373,7 @@
   },
   {
     "id": "O",
-    "display_name": "石岡",
+    "display_name": "木村",
     "is_active": true,
     "is_free_eligible": false,
     "can_ecg": true,

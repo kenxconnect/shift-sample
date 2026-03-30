@@ -296,10 +296,10 @@ class TestNormalizeTimeText(unittest.TestCase):
 
 class TestStaffSpec(unittest.TestCase):
     def test_spec_from_dict_defaults(self) -> None:
-        item = {"id": "A", "display_name": "A 石井"}
+        item = {"id": "A", "display_name": "A 佐藤"}
         spec = spec_from_dict(item)
         self.assertEqual(spec.id, "A")
-        self.assertEqual(spec.display_name, "A 石井")
+        self.assertEqual(spec.display_name, "A 佐藤")
         self.assertTrue(spec.is_active)
         self.assertTrue(spec.can_ecg)
         self.assertTrue(spec.can_lunch_duty)
@@ -332,14 +332,14 @@ class TestStaffSpec(unittest.TestCase):
         self.assertTrue(spec.male_only)
 
     def test_spec_from_dict_o_staff_observer_default(self) -> None:
-        item = {"id": "O", "display_name": "O 石岡", "observer_areas": ["心臓"]}
+        item = {"id": "O", "display_name": "O 木村", "observer_areas": ["心臓"]}
         spec = spec_from_dict(item)
         self.assertIn("心臓", spec.observer_areas)
 
     def test_spec_from_dict_observation_duration_overrides(self) -> None:
         item = {
             "id": "O",
-            "display_name": "O 石岡",
+            "display_name": "O 木村",
             "observer_areas": ["心臓", "頸動脈"],
             "observationDurationOverrides": {"心臓": 42, "頸動脈": 18},
         }
@@ -350,7 +350,7 @@ class TestStaffSpec(unittest.TestCase):
     def test_spec_from_dict_practical_training_areas(self) -> None:
         item = {
             "id": "O",
-            "display_name": "O 石岡",
+            "display_name": "O 木村",
             "echo_areas": ["心臓", "頸動脈", "甲状腺", "腹部"],
             "practical_training_areas": ["心臓", "頸動脈"],
         }
@@ -358,58 +358,58 @@ class TestStaffSpec(unittest.TestCase):
         self.assertEqual(spec.practical_training_areas, {"心臓", "頸動脈"})
 
     def test_spec_from_dict_non_o_no_observer(self) -> None:
-        item = {"id": "A", "display_name": "A 石井"}
+        item = {"id": "A", "display_name": "A 佐藤"}
         spec = spec_from_dict(item)
         self.assertEqual(len(spec.observer_areas), 0)
 
     def test_spec_from_dict_defaults_kanaya_preferred_machine(self) -> None:
-        spec = spec_from_dict({"id": "J", "display_name": "金谷", "can_ecg": True})
+        spec = spec_from_dict({"id": "J", "display_name": "加藤", "can_ecg": True})
         self.assertEqual(spec.preferred_ecg_machine, 2)
 
     def test_spec_from_dict_accepts_explicit_preferred_ecg_machine(self) -> None:
         spec = spec_from_dict(
-            {"id": "J", "display_name": "金谷", "preferred_ecg_machine": 1}
+            {"id": "J", "display_name": "加藤", "preferred_ecg_machine": 1}
         )
         self.assertEqual(spec.preferred_ecg_machine, 1)
 
     def test_spec_from_dict_defaults_max_echo_frames_by_staff_name(self) -> None:
         self.assertEqual(
-            spec_from_dict({"id": "O", "display_name": "O 石岡"}).max_echo_frames,
+            spec_from_dict({"id": "O", "display_name": "O 木村"}).max_echo_frames,
             5,
         )
         self.assertEqual(
-            spec_from_dict({"id": "B", "display_name": "B 秋田"}).max_echo_frames,
+            spec_from_dict({"id": "B", "display_name": "B 鈴木"}).max_echo_frames,
             4,
         )
         self.assertEqual(
-            spec_from_dict({"id": "A", "display_name": "A 石井"}).max_echo_frames,
+            spec_from_dict({"id": "A", "display_name": "A 佐藤"}).max_echo_frames,
             3,
         )
 
     def test_spec_from_dict_uses_explicit_max_echo_frames(self) -> None:
         self.assertEqual(
             spec_from_dict(
-                {"id": "B", "display_name": "B 秋田", "max_echo_frames": 6}
+                {"id": "B", "display_name": "B 鈴木", "max_echo_frames": 6}
             ).max_echo_frames,
             6,
         )
         self.assertEqual(
             spec_from_dict(
-                {"id": "B", "display_name": "B 秋田", "maxEchoFrames": 2}
+                {"id": "B", "display_name": "B 鈴木", "maxEchoFrames": 2}
             ).max_echo_frames,
             2,
         )
 
     def test_specs_from_config_filters_inactive(self) -> None:
         config = [
-            {"id": "A", "display_name": "A 石井", "is_active": True},
-            {"id": "B", "display_name": "B 秋田", "is_active": False},
-            {"id": "C", "display_name": "C 大橋", "is_active": True},
+            {"id": "A", "display_name": "A 佐藤", "is_active": True},
+            {"id": "B", "display_name": "B 鈴木", "is_active": False},
+            {"id": "C", "display_name": "C 高橋", "is_active": True},
         ]
         specs = specs_from_config(config)
-        self.assertIn("A 石井", specs)
-        self.assertNotIn("B 秋田", specs)
-        self.assertIn("C 大橋", specs)
+        self.assertIn("A 佐藤", specs)
+        self.assertNotIn("B 鈴木", specs)
+        self.assertIn("C 高橋", specs)
         self.assertEqual(len(specs), 2)
 
     def test_specs_from_config_default_config(self) -> None:
@@ -423,7 +423,7 @@ class TestDutyBreakSettings(unittest.TestCase):
             [
                 {
                     "id": "A",
-                    "display_name": "石井",
+                    "display_name": "佐藤",
                     "is_active": True,
                     "can_ecg": True,
                     "echo_areas": ["心臓", "頸動脈", "甲状腺", "腹部"],
@@ -439,15 +439,15 @@ class TestDutyBreakSettings(unittest.TestCase):
         adjusted = apply_role_constraints(
             specs,
             {
-                "duties": {"生体①": "石井"},
+                "duties": {"生体①": "佐藤"},
                 "constraint_settings": {},
             },
         )
 
-        self.assertEqual(adjusted["石井"].break_preference_start, "10:00")
-        self.assertEqual(adjusted["石井"].break_preference_end, "14:00")
-        self.assertEqual(adjusted["石井"].break_minutes, 60)
-        self.assertFalse(adjusted["石井"].allow_split_break)
+        self.assertEqual(adjusted["佐藤"].break_preference_start, "10:00")
+        self.assertEqual(adjusted["佐藤"].break_preference_end, "14:00")
+        self.assertEqual(adjusted["佐藤"].break_minutes, 60)
+        self.assertFalse(adjusted["佐藤"].allow_split_break)
 
     def test_apply_role_constraints_keeps_duty_breaks_even_when_duty_shift_is_relaxed(
         self,
@@ -456,7 +456,7 @@ class TestDutyBreakSettings(unittest.TestCase):
             [
                 {
                     "id": "A",
-                    "display_name": "石井",
+                    "display_name": "佐藤",
                     "is_active": True,
                     "can_ecg": True,
                     "echo_areas": ["心臓", "頸動脈", "甲状腺", "腹部"],
@@ -472,23 +472,23 @@ class TestDutyBreakSettings(unittest.TestCase):
         adjusted = apply_role_constraints(
             specs,
             {
-                "duties": {"立ち上げ": "石井"},
+                "duties": {"立ち上げ": "佐藤"},
                 "constraint_settings": {},
             },
             relax=True,
         )
 
-        self.assertEqual(adjusted["石井"].shift_start, "08:00")
-        self.assertEqual(adjusted["石井"].break_preference_start, "10:00")
-        self.assertEqual(adjusted["石井"].break_preference_end, "14:00")
-        self.assertEqual(adjusted["石井"].break_minutes, 60)
+        self.assertEqual(adjusted["佐藤"].shift_start, "08:00")
+        self.assertEqual(adjusted["佐藤"].break_preference_start, "10:00")
+        self.assertEqual(adjusted["佐藤"].break_preference_end, "14:00")
+        self.assertEqual(adjusted["佐藤"].break_minutes, 60)
 
     def test_build_break_interval_candidates_uses_duty_break_window(self) -> None:
         specs = specs_from_config(
             [
                 {
                     "id": "A",
-                    "display_name": "石井",
+                    "display_name": "佐藤",
                     "is_active": True,
                     "can_ecg": True,
                     "echo_areas": ["心臓", "頸動脈", "甲状腺", "腹部"],
@@ -502,7 +502,7 @@ class TestDutyBreakSettings(unittest.TestCase):
             ]
         )
         input_data = {
-            "duties": {"バックアップ": "石井"},
+            "duties": {"バックアップ": "佐藤"},
             "constraint_settings": {
                 "duty_break_settings": {
                     "バックアップ": {
@@ -517,8 +517,8 @@ class TestDutyBreakSettings(unittest.TestCase):
         adjusted = apply_role_constraints(specs, input_data)
 
         candidates = build_break_interval_candidates(
-            name="石井",
-            spec=adjusted["石井"],
+            name="佐藤",
+            spec=adjusted["佐藤"],
             special_early_staff=set(),
             lunch_duty_staff=[],
             input_data=input_data,
@@ -534,7 +534,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
         return [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "can_ecg": True,
                 "echo_areas": ["心臓", "頸動脈", "甲状腺", "腹部"],
@@ -559,7 +559,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
         candidates = compute_lunch_duty_candidates({"table": []}, input_data)
 
         self.assertEqual(len(candidates), 1)
-        self.assertEqual(candidates[0]["担当者"], "石井")
+        self.assertEqual(candidates[0]["担当者"], "佐藤")
         self.assertEqual(candidates[0]["候補条件"], "130分以上連続")
         self.assertEqual(candidates[0]["最大連続空き"], "130分")
 
@@ -575,8 +575,8 @@ class TestLunchDutyCandidates(unittest.TestCase):
             "table": [
                 {
                     "枠": 9,
-                    "心電図担当": "石井",
-                    "エコー担当": "秋田",
+                    "心電図担当": "佐藤",
+                    "エコー担当": "鈴木",
                 }
             ]
         }
@@ -584,7 +584,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
         candidates = compute_lunch_duty_candidates(result, input_data)
 
         self.assertEqual(len(candidates), 1)
-        self.assertEqual(candidates[0]["担当者"], "石井")
+        self.assertEqual(candidates[0]["担当者"], "佐藤")
         self.assertEqual(candidates[0]["候補条件"], "60分 + 70分")
         self.assertEqual(candidates[0]["最大連続空き"], "70分")
 
@@ -592,7 +592,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "can_ecg": True,
                 "can_lunch_duty": True,
@@ -600,7 +600,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
             },
             {
                 "id": "B",
-                "display_name": "秋田",
+                "display_name": "鈴木",
                 "is_active": True,
                 "can_ecg": True,
                 "can_lunch_duty": True,
@@ -609,11 +609,11 @@ class TestLunchDutyCandidates(unittest.TestCase):
         ]
         specs = specs_from_config(config)
         input_data = default_input(config)
-        input_data["duties"]["転送"] = "秋田"
+        input_data["duties"]["転送"] = "鈴木"
 
         selected = auto_select_lunch_duty_staff(input_data, specs)
 
-        self.assertEqual(selected, ["秋田"])
+        self.assertEqual(selected, ["鈴木"])
 
     def test_auto_select_lunch_duty_staff_returns_empty_when_disabled(self) -> None:
         config = self._base_staff_config("09:00", "16:30")
@@ -629,7 +629,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "can_ecg": True,
                 "can_lunch_duty": True,
@@ -637,7 +637,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
             },
             {
                 "id": "B",
-                "display_name": "秋田",
+                "display_name": "鈴木",
                 "is_active": True,
                 "can_ecg": True,
                 "can_lunch_duty": True,
@@ -646,17 +646,17 @@ class TestLunchDutyCandidates(unittest.TestCase):
         ]
         specs = specs_from_config(config)
         input_data = default_input(config)
-        input_data["lunch_duty_exclusions"] = ["石井"]
+        input_data["lunch_duty_exclusions"] = ["佐藤"]
 
         selected = auto_select_lunch_duty_staff(input_data, specs)
 
-        self.assertEqual(selected, ["秋田"])
+        self.assertEqual(selected, ["鈴木"])
 
     def test_auto_select_lunch_duty_staff_uses_recent_history_as_light_penalty(self) -> None:
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "can_ecg": True,
                 "can_lunch_duty": True,
@@ -664,7 +664,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
             },
             {
                 "id": "B",
-                "display_name": "秋田",
+                "display_name": "鈴木",
                 "is_active": True,
                 "can_ecg": True,
                 "can_lunch_duty": True,
@@ -678,25 +678,25 @@ class TestLunchDutyCandidates(unittest.TestCase):
             {
                 "target_date": "2026-03-20",
                 "version": 1,
-                "result": {"lunch_duty_staff": ["石井"]},
+                "result": {"lunch_duty_staff": ["佐藤"]},
             },
             {
                 "target_date": "2026-03-19",
                 "version": 1,
-                "result": {"lunch_duty_staff": ["石井"]},
+                "result": {"lunch_duty_staff": ["佐藤"]},
             },
         ]
 
         with patch("scheduler.load_history", return_value=history):
             selected = auto_select_lunch_duty_staff(input_data, specs)
 
-        self.assertEqual(selected, ["秋田"])
+        self.assertEqual(selected, ["鈴木"])
 
     def test_precheck_inputs_errors_when_lunch_duty_required_but_no_candidate(self) -> None:
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "can_ecg": True,
                 "can_lunch_duty": False,
@@ -717,7 +717,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -730,7 +730,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
         input_data = default_input(config)
         input_data["morning_follow"] = {
             "enabled": True,
-            "assignees": [{"source_type": "free", "staff_name": "石井"}],
+            "assignees": [{"source_type": "free", "staff_name": "佐藤"}],
             "start_time": "09:10",
             "end_time": "10:00",
             "linked_area_count": True,
@@ -748,7 +748,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -761,7 +761,7 @@ class TestLunchDutyCandidates(unittest.TestCase):
         input_data = default_input(config)
         input_data["evening_follow"] = {
             "enabled": True,
-            "assignees": [{"source_type": "free", "staff_name": "石井"}],
+            "assignees": [{"source_type": "free", "staff_name": "佐藤"}],
             "start_time": "16:10",
             "end_time": "16:30",
             "linked_area_count": True,
@@ -793,7 +793,7 @@ class TestLunchDutyDisplayIntervals(unittest.TestCase):
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -810,24 +810,24 @@ class TestLunchDutyDisplayIntervals(unittest.TestCase):
                 {
                     "枠": 1,
                     "患者性別": "男性",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "09:00",
                     "心電図機械": 1,
-                    "エコー担当": "秋田",
+                    "エコー担当": "鈴木",
                     "エコー開始": "09:25",
                     "エコー機械": 1,
                     "エコー領域": "心臓・頸動脈・甲状腺・腹部",
                     "メモ": "",
                 }
             ],
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "pair_task_orders": {},
         }
 
         intervals = compute_lunch_duty_display_intervals(result, input_data)
 
         self.assertEqual(
-            intervals["石井"],
+            intervals["佐藤"],
             (
                 minutes_from_day_start("10:00"),
                 minutes_from_day_start("12:10"),
@@ -838,16 +838,16 @@ class TestLunchDutyDisplayIntervals(unittest.TestCase):
 class TestOptimizationHelpers(unittest.TestCase):
     def test_compute_fairness_metrics_uses_targets_for_primary_score(self) -> None:
         specs = {
-            "石井": StaffSpec(id="A", display_name="石井"),
-            "秋田": StaffSpec(id="B", display_name="秋田"),
-            "大橋": StaffSpec(id="C", display_name="大橋"),
+            "佐藤": StaffSpec(id="A", display_name="佐藤"),
+            "鈴木": StaffSpec(id="B", display_name="鈴木"),
+            "高橋": StaffSpec(id="C", display_name="高橋"),
         }
 
         fairness = compute_fairness_metrics(
-            loads={"石井": 2, "秋田": 2, "大橋": 2},
+            loads={"佐藤": 2, "鈴木": 2, "高橋": 2},
             input_data={"duties": {}, "shift_overrides": {}},
             specs=specs,
-            targets={"石井": 4, "秋田": 1, "大橋": 1},
+            targets={"佐藤": 4, "鈴木": 1, "高橋": 1},
         )
 
         self.assertEqual(fairness["score"], 63)
@@ -862,16 +862,16 @@ class TestOptimizationHelpers(unittest.TestCase):
         self,
     ) -> None:
         specs = {
-            "石井": StaffSpec(id="A", display_name="石井"),
-            "秋田": StaffSpec(id="B", display_name="秋田"),
-            "大橋": StaffSpec(id="C", display_name="大橋"),
+            "佐藤": StaffSpec(id="A", display_name="佐藤"),
+            "鈴木": StaffSpec(id="B", display_name="鈴木"),
+            "高橋": StaffSpec(id="C", display_name="高橋"),
         }
 
         fairness = compute_fairness_metrics(
-            loads={"石井": 3, "秋田": 3, "大橋": 0},
-            input_data={"duties": {}, "shift_overrides": {"大橋": {"shift_end": "12:00"}}},
+            loads={"佐藤": 3, "鈴木": 3, "高橋": 0},
+            input_data={"duties": {}, "shift_overrides": {"高橋": {"shift_end": "12:00"}}},
             specs=specs,
-            targets={"石井": 3, "秋田": 3, "大橋": 0},
+            targets={"佐藤": 3, "鈴木": 3, "高橋": 0},
         )
 
         self.assertEqual(fairness["balance_score"], 100)
@@ -888,8 +888,8 @@ class TestOptimizationHelpers(unittest.TestCase):
     def test_result_selection_key_prefers_higher_display_score_in_fairness_mode(self) -> None:
         mode_spec = reoptimization_mode_spec("fairness")
         specs = {
-            "石井": StaffSpec(id="A", display_name="石井"),
-            "秋田": StaffSpec(id="B", display_name="秋田"),
+            "佐藤": StaffSpec(id="A", display_name="佐藤"),
+            "鈴木": StaffSpec(id="B", display_name="鈴木"),
         }
         input_data = {"staff_config": [], "duties": {}, "shift_overrides": {}}
         baseline = {
@@ -935,8 +935,8 @@ class TestOptimizationHelpers(unittest.TestCase):
     def test_result_improves_requested_fairness_requires_score_gain(self) -> None:
         mode_spec = reoptimization_mode_spec("fairness")
         specs = {
-            "石井": StaffSpec(id="A", display_name="石井"),
-            "秋田": StaffSpec(id="B", display_name="秋田"),
+            "佐藤": StaffSpec(id="A", display_name="佐藤"),
+            "鈴木": StaffSpec(id="B", display_name="鈴木"),
         }
         baseline = {
             "table": [{"枠": 1}],
@@ -1056,7 +1056,7 @@ class TestOptimizationHelpers(unittest.TestCase):
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -1067,7 +1067,7 @@ class TestOptimizationHelpers(unittest.TestCase):
             },
             {
                 "id": "B",
-                "display_name": "秋田",
+                "display_name": "鈴木",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -1084,41 +1084,41 @@ class TestOptimizationHelpers(unittest.TestCase):
                 {
                     "枠": 1,
                     "患者性別": "男性",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "09:00",
                     "心電図機械": 1,
-                    "エコー担当": "秋田",
+                    "エコー担当": "鈴木",
                     "エコー開始": "09:25",
                     "エコー機械": 1,
                     "エコー領域": "心臓・頸動脈・甲状腺・腹部",
                     "メモ": "",
                 }
             ],
-            "breaks": {"石井": set(), "秋田": set()},
+            "breaks": {"佐藤": set(), "鈴木": set()},
             "break_intervals": {},
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "pair_task_orders": {},
-            "targets": {"石井": 1, "秋田": 1},
+            "targets": {"佐藤": 1, "鈴木": 1},
             "fairness": {"score": 99},
         }
         history = [
             {
                 "target_date": "2026-03-20",
                 "version": 1,
-                "result": {"lunch_duty_staff": ["秋田"]},
+                "result": {"lunch_duty_staff": ["鈴木"]},
             }
         ]
 
         with patch("scheduler.load_history", return_value=history):
             recalculated = recalculate_result_metrics(input_data, result)
 
-        self.assertEqual(recalculated["used_input"]["lunch_duty_staff"], ["石井"])
+        self.assertEqual(recalculated["used_input"]["lunch_duty_staff"], ["佐藤"])
 
     def test_recalculate_result_metrics_prefers_actual_feasible_lunch_staff(self) -> None:
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -1129,7 +1129,7 @@ class TestOptimizationHelpers(unittest.TestCase):
             },
             {
                 "id": "B",
-                "display_name": "秋田",
+                "display_name": "鈴木",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -1140,48 +1140,48 @@ class TestOptimizationHelpers(unittest.TestCase):
             },
         ]
         input_data = default_input(config)
-        input_data["lunch_duty_staff"] = ["石井"]
+        input_data["lunch_duty_staff"] = ["佐藤"]
         result = {
             "table": [
                 {
                     "枠": 1,
                     "患者性別": "男性",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "09:00",
                     "心電図機械": 1,
-                    "エコー担当": "秋田",
+                    "エコー担当": "鈴木",
                     "エコー開始": "09:25",
                     "エコー機械": 1,
                     "エコー領域": "心臓・頸動脈・甲状腺・腹部",
                     "メモ": "",
                 }
             ],
-            "breaks": {"石井": set(), "秋田": set()},
+            "breaks": {"佐藤": set(), "鈴木": set()},
             "break_intervals": {},
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "pair_task_orders": {},
-            "targets": {"石井": 1, "秋田": 0},
+            "targets": {"佐藤": 1, "鈴木": 0},
         }
 
         def _fake_allocate(adjusted_input, _slots, _specs, busy_intervals_by_staff=None):
-            return {"石井": set(), "秋田": set()}, {}, list(
+            return {"佐藤": set(), "鈴木": set()}, {}, list(
                 adjusted_input.get("lunch_duty_staff", [])
             )
 
         with patch(
             "scheduler.actual_sufficient_lunch_duty_candidate_names",
-            return_value=["秋田"],
+            return_value=["鈴木"],
         ), patch("scheduler.allocate_actual_breaks", side_effect=_fake_allocate):
             recalculated = recalculate_result_metrics(input_data, result)
 
-        self.assertEqual(recalculated["lunch_duty_staff"], ["秋田"])
-        self.assertEqual(recalculated["used_input"]["lunch_duty_staff"], ["秋田"])
+        self.assertEqual(recalculated["lunch_duty_staff"], ["鈴木"])
+        self.assertEqual(recalculated["used_input"]["lunch_duty_staff"], ["鈴木"])
 
     def test_lunch_duty_display_violation_reports_insufficient_interval(self) -> None:
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -1193,9 +1193,9 @@ class TestOptimizationHelpers(unittest.TestCase):
         ]
         input_data = default_input(config)
         result = {
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "break_intervals": {
-                "石井": (
+                "佐藤": (
                     minutes_from_day_start("11:15"),
                     minutes_from_day_start("12:15"),
                 )
@@ -1204,7 +1204,7 @@ class TestOptimizationHelpers(unittest.TestCase):
 
         issue = lunch_duty_display_violation(result, input_data)
 
-        self.assertEqual(issue[0], "石井")
+        self.assertEqual(issue[0], "佐藤")
         self.assertIn("130分連続または60分+70分", issue[1])
         self.assertIn("11:15-12:15", issue[1])
 
@@ -1214,7 +1214,7 @@ class TestOptimizationHelpers(unittest.TestCase):
         config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -1228,19 +1228,19 @@ class TestOptimizationHelpers(unittest.TestCase):
         specs = specs_from_config(config)
         result = {
             "table": [],
-            "loads": {"石井": 0},
-            "breaks": {"石井": set()},
+            "loads": {"佐藤": 0},
+            "breaks": {"佐藤": set()},
             "two_person_cases": 0,
             "break_intervals": {
-                "石井": (
+                "佐藤": (
                     minutes_from_day_start("11:15"),
                     minutes_from_day_start("12:15"),
                 )
             },
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
         }
 
-        issues = collect_constraint_issues(result, input_data, specs, {"石井": 0})
+        issues = collect_constraint_issues(result, input_data, specs, {"佐藤": 0})
 
         self.assertTrue(
             any(
@@ -1254,7 +1254,7 @@ class TestOptimizationHelpers(unittest.TestCase):
     def test_violation_score_treats_lunch_duty_shortage_as_heavy_penalty(self) -> None:
         score = violation_score(
             [
-                "石井 の昼当番は設定されていますが、130分連続または60分+70分の時間帯を確保できていません。現在の区間: 11:15-12:15"
+                "佐藤 の昼当番は設定されていますが、130分連続または60分+70分の時間帯を確保できていません。現在の区間: 11:15-12:15"
             ]
         )
 
@@ -1463,18 +1463,18 @@ class TestFreeIntervalsWithinWindow(unittest.TestCase):
 class TestIsHalfDayOff(unittest.TestCase):
     def test_not_off(self) -> None:
         input_data = {"morning_off_staff": [], "afternoon_off_staff": []}
-        self.assertFalse(is_half_day_off("A 石井", input_data))
+        self.assertFalse(is_half_day_off("A 佐藤", input_data))
 
     def test_morning_off(self) -> None:
-        input_data = {"morning_off_staff": ["A 石井"], "afternoon_off_staff": []}
-        self.assertTrue(is_half_day_off("A 石井", input_data))
+        input_data = {"morning_off_staff": ["A 佐藤"], "afternoon_off_staff": []}
+        self.assertTrue(is_half_day_off("A 佐藤", input_data))
 
     def test_afternoon_off(self) -> None:
-        input_data = {"morning_off_staff": [], "afternoon_off_staff": ["B 秋田"]}
-        self.assertTrue(is_half_day_off("B 秋田", input_data))
+        input_data = {"morning_off_staff": [], "afternoon_off_staff": ["B 鈴木"]}
+        self.assertTrue(is_half_day_off("B 鈴木", input_data))
 
     def test_missing_keys_false(self) -> None:
-        self.assertFalse(is_half_day_off("A 石井", {}))
+        self.assertFalse(is_half_day_off("A 佐藤", {}))
 
 
 # ---------------------------------------------------------------------------
@@ -1506,16 +1506,16 @@ class TestRecommendedBlankAfterSlot(unittest.TestCase):
 
 class TestNormalizeStaffName(unittest.TestCase):
     def test_strips_whitespace(self) -> None:
-        self.assertEqual(normalize_staff_name("  A 石井  "), "A 石井")
+        self.assertEqual(normalize_staff_name("  A 佐藤  "), "A 佐藤")
 
     def test_empty(self) -> None:
         self.assertEqual(normalize_staff_name(""), "")
 
     def test_already_clean(self) -> None:
-        self.assertEqual(normalize_staff_name("C 大橋"), "C 大橋")
+        self.assertEqual(normalize_staff_name("C 高橋"), "C 高橋")
 
     def test_renames_legacy_staff_alias(self) -> None:
-        self.assertEqual(normalize_staff_name("上の平"), "上之平")
+        self.assertEqual(normalize_staff_name("山本"), "山本")
 
 
 # ---------------------------------------------------------------------------
@@ -1530,53 +1530,53 @@ class TestValidateStaffConfig(unittest.TestCase):
 
     def test_normalize_staff_config_adds_default_lunch_duty_flag(self) -> None:
         config = normalize_staff_config(
-            [{"id": "A", "display_name": "A 石井", "is_active": True}]
+            [{"id": "A", "display_name": "A 佐藤", "is_active": True}]
         )
         self.assertTrue(config[0]["can_lunch_duty"])
 
     def test_normalize_staff_config_defaults_specific_staff_to_lunch_duty_off(self) -> None:
         config = normalize_staff_config(
             [
-                {"id": "F", "display_name": "畠山", "is_active": True},
-                {"id": "J", "display_name": "金谷", "is_active": True},
-                {"id": "O", "display_name": "石岡", "is_active": True},
-                {"id": "A", "display_name": "石井", "is_active": True},
+                {"id": "F", "display_name": "渡辺", "is_active": True},
+                {"id": "J", "display_name": "加藤", "is_active": True},
+                {"id": "O", "display_name": "木村", "is_active": True},
+                {"id": "A", "display_name": "佐藤", "is_active": True},
             ]
         )
         by_name = {row["display_name"]: row["can_lunch_duty"] for row in config}
-        self.assertFalse(by_name["畠山"])
-        self.assertFalse(by_name["金谷"])
-        self.assertFalse(by_name["石岡"])
-        self.assertTrue(by_name["石井"])
+        self.assertFalse(by_name["渡辺"])
+        self.assertFalse(by_name["加藤"])
+        self.assertFalse(by_name["木村"])
+        self.assertTrue(by_name["佐藤"])
 
     def test_normalize_staff_config_backfills_max_echo_frames_for_legacy_rows(self) -> None:
         config = normalize_staff_config(
             [
-                {"id": "O", "display_name": "石岡", "is_active": True, "max_load": 14},
-                {"id": "A", "display_name": "石井", "is_active": True, "max_load": 13},
+                {"id": "O", "display_name": "木村", "is_active": True, "max_load": 14},
+                {"id": "A", "display_name": "佐藤", "is_active": True, "max_load": 13},
             ]
         )
         by_name = {row["display_name"]: row for row in config}
-        self.assertEqual(by_name["石岡"]["max_echo_frames"], 5)
-        self.assertEqual(by_name["石井"]["max_echo_frames"], 3)
-        self.assertEqual(by_name["石岡"]["max_load"], 14)
-        self.assertEqual(by_name["石井"]["max_load"], 13)
+        self.assertEqual(by_name["木村"]["max_echo_frames"], 5)
+        self.assertEqual(by_name["佐藤"]["max_echo_frames"], 3)
+        self.assertEqual(by_name["木村"]["max_load"], 14)
+        self.assertEqual(by_name["佐藤"]["max_load"], 13)
 
     def test_default_staff_config_uses_backup_based_defaults(self) -> None:
         by_id = {row["id"]: row for row in DEFAULT_STAFF_CONFIG}
         self.assertEqual(by_id["A"]["break_minutes"], 60)
         self.assertEqual(by_id["A"]["break_preference_start"], "11:00")
-        self.assertEqual(by_id["G"]["display_name"], "上之平")
+        self.assertEqual(by_id["G"]["display_name"], "山本")
 
     def test_normalize_staff_config_renames_legacy_staff_alias(self) -> None:
         config = normalize_staff_config(
-            [{"id": "G", "display_name": "上の平", "is_active": True}]
+            [{"id": "G", "display_name": "山本", "is_active": True}]
         )
-        self.assertEqual(config[0]["display_name"], "上之平")
+        self.assertEqual(config[0]["display_name"], "山本")
 
     def test_duplicate_id(self) -> None:
         config = [
-            {"id": "A", "display_name": "A 石井", "is_active": True},
+            {"id": "A", "display_name": "A 佐藤", "is_active": True},
             {"id": "A", "display_name": "A 別名", "is_active": True},
         ]
         config = normalize_staff_config(config)
@@ -1608,7 +1608,7 @@ class TestValidateStaffConfig(unittest.TestCase):
         config = [
             {
                 "id": "J",
-                "display_name": "金谷",
+                "display_name": "加藤",
                 "is_active": True,
                 "can_ecg": True,
             }
@@ -1855,7 +1855,7 @@ class TestRescheduleAfterCancellation(unittest.TestCase):
 
         inp = default_input(self.staff_config)
         inp["patient_count"] = patient_count
-        inp["off_staff"] = ["大橋", "皆口"]
+        inp["off_staff"] = ["高橋", "吉田"]
         inp["female_slots"] = [2, 5, 8, 11, 14, 17, 20]
         inp["staff_config"] = self.staff_config
         return inp
@@ -2122,32 +2122,32 @@ class TestCapabilityPartition(unittest.TestCase):
     """_capability_partition の検証: 制限付きスタッフ向け代替パーティション。"""
 
     def test_oshima_style_restricted(self) -> None:
-        """大島型（心臓・頸動脈・甲状腺のみ）→ 全領域を代替パーティションに。"""
+        """松本型（心臓・頸動脈・甲状腺のみ）→ 全領域を代替パーティションに。"""
         from scheduler import _capability_partition
 
         slot = _make_slot(1, "女性", ["心臓", "頸動脈", "甲状腺", "乳腺", "腹部"])
         specs = {
-            "大島": _limited_spec("大島", ["心臓", "頸動脈", "甲状腺"]),
-            "石井": _full_spec("石井"),
+            "松本": _limited_spec("松本", ["心臓", "頸動脈", "甲状腺"]),
+            "佐藤": _full_spec("佐藤"),
         }
-        result = _capability_partition(slot, "大島", "石井", specs)
+        result = _capability_partition(slot, "松本", "佐藤", specs)
         self.assertIsNotNone(result)
-        self.assertEqual(result["大島"], ["心臓", "頸動脈", "甲状腺"])
-        self.assertEqual(result["石井"], ["乳腺", "腹部"])
+        self.assertEqual(result["松本"], ["心臓", "頸動脈", "甲状腺"])
+        self.assertEqual(result["佐藤"], ["乳腺", "腹部"])
 
     def test_ishioka_style_restricted(self) -> None:
-        """石岡型（頸動脈・甲状腺・乳腺・腹部のみ）→ 全領域を代替パーティションに。"""
+        """木村型（頸動脈・甲状腺・乳腺・腹部のみ）→ 全領域を代替パーティションに。"""
         from scheduler import _capability_partition
 
         slot = _make_slot(2, "女性", ["心臓", "頸動脈", "甲状腺", "乳腺", "腹部"])
         specs = {
-            "石岡": _limited_spec("石岡", ["頸動脈", "甲状腺", "乳腺", "腹部"]),
-            "石井": _full_spec("石井"),
+            "木村": _limited_spec("木村", ["頸動脈", "甲状腺", "乳腺", "腹部"]),
+            "佐藤": _full_spec("佐藤"),
         }
-        result = _capability_partition(slot, "石岡", "石井", specs)
+        result = _capability_partition(slot, "木村", "佐藤", specs)
         self.assertIsNotNone(result)
-        self.assertEqual(result["石岡"], ["頸動脈", "甲状腺", "乳腺", "腹部"])
-        self.assertEqual(result["石井"], ["心臓"])
+        self.assertEqual(result["木村"], ["頸動脈", "甲状腺", "乳腺", "腹部"])
+        self.assertEqual(result["佐藤"], ["心臓"])
 
     def test_full_coverage_returns_none(self) -> None:
         """両スタッフとも全領域 → 代替パーティション不要。"""
@@ -2171,18 +2171,18 @@ class TestCapabilityPartition(unittest.TestCase):
         self.assertIsNone(result)
 
     def test_male_oshima_generates_alt(self) -> None:
-        """男性患者で大島型 → 心臓+頸動脈+甲状腺 / 腹部。"""
+        """男性患者で松本型 → 心臓+頸動脈+甲状腺 / 腹部。"""
         from scheduler import _capability_partition
 
         slot = _make_slot(5, "男性", ["心臓", "頸動脈", "甲状腺", "腹部"])
         specs = {
-            "大島": _limited_spec("大島", ["心臓", "頸動脈", "甲状腺"]),
-            "石井": _full_spec("石井"),
+            "松本": _limited_spec("松本", ["心臓", "頸動脈", "甲状腺"]),
+            "佐藤": _full_spec("佐藤"),
         }
-        result = _capability_partition(slot, "大島", "石井", specs)
+        result = _capability_partition(slot, "松本", "佐藤", specs)
         self.assertIsNotNone(result)
-        self.assertEqual(result["大島"], ["心臓", "頸動脈", "甲状腺"])
-        self.assertEqual(result["石井"], ["腹部"])
+        self.assertEqual(result["松本"], ["心臓", "頸動脈", "甲状腺"])
+        self.assertEqual(result["佐藤"], ["腹部"])
 
     def test_order_preserved_in_capability_split(self) -> None:
         """代替パーティションの順序: 心臓が先。"""
@@ -2190,29 +2190,29 @@ class TestCapabilityPartition(unittest.TestCase):
 
         slot = _make_slot(6, "女性", ["心臓", "頸動脈", "甲状腺", "乳腺", "腹部"])
         specs = {
-            "大島": _limited_spec("大島", ["心臓", "頸動脈", "甲状腺"]),
-            "石井": _full_spec("石井"),
+            "松本": _limited_spec("松本", ["心臓", "頸動脈", "甲状腺"]),
+            "佐藤": _full_spec("佐藤"),
         }
-        result = _capability_partition(slot, "大島", "石井", specs)
+        result = _capability_partition(slot, "松本", "佐藤", specs)
         self.assertIsNotNone(result)
         order = default_pair_order(result)
-        # 大島 has 心臓 → goes first
-        self.assertEqual(order[0], "大島")
+        # 松本 has 心臓 → goes first
+        self.assertEqual(order[0], "松本")
 
     def test_ishioka_order_heart_first(self) -> None:
-        """石岡型: パートナーが心臓 → パートナー先。"""
+        """木村型: パートナーが心臓 → パートナー先。"""
         from scheduler import _capability_partition, default_pair_order
 
         slot = _make_slot(7, "女性", ["心臓", "頸動脈", "甲状腺", "乳腺", "腹部"])
         specs = {
-            "石岡": _limited_spec("石岡", ["頸動脈", "甲状腺", "乳腺", "腹部"]),
-            "石井": _full_spec("石井"),
+            "木村": _limited_spec("木村", ["頸動脈", "甲状腺", "乳腺", "腹部"]),
+            "佐藤": _full_spec("佐藤"),
         }
-        result = _capability_partition(slot, "石岡", "石井", specs)
+        result = _capability_partition(slot, "木村", "佐藤", specs)
         self.assertIsNotNone(result)
         order = default_pair_order(result)
-        # 石井 has 心臓 only → rank 0 → goes first
-        self.assertEqual(order[0], "石井")
+        # 佐藤 has 心臓 only → rank 0 → goes first
+        self.assertEqual(order[0], "佐藤")
 
 
 class TestObserverEchoTiming(unittest.TestCase):
@@ -2374,18 +2374,18 @@ class TestPracticalTrainingTiming(unittest.TestCase):
     def test_practical_training_prefers_trainee_covering_all_areas(self) -> None:
         slot = _make_slot(11, "男性", ["心臓", "頸動脈", "甲状腺", "腹部"])
         specs = {
-            "O 石岡": spec_from_dict(
+            "O 木村": spec_from_dict(
                 {
                     "id": "O",
-                    "display_name": "O 石岡",
+                    "display_name": "O 木村",
                     "echo_areas": ["心臓", "頸動脈", "甲状腺", "腹部"],
                     "practical_training_areas": ["心臓"],
                 }
             ),
-            "A 石井": _full_spec("A 石井"),
+            "A 佐藤": _full_spec("A 佐藤"),
         }
         input_data = {
-            "practical_training": {"O 石岡": {"心臓": {"slots": [11], "count": 1}}},
+            "practical_training": {"O 木村": {"心臓": {"slots": [11], "count": 1}}},
             "constraint_settings": {
                 "practical_training_area_settings": {
                     "心臓": {"trainingDuration": 30}
@@ -2395,19 +2395,19 @@ class TestPracticalTrainingTiming(unittest.TestCase):
         }
 
         assignments = pair_area_partition(
-            slot, "O 石岡", "A 石井", specs, set(), input_data=input_data
+            slot, "O 木村", "A 佐藤", specs, set(), input_data=input_data
         )
 
         self.assertEqual(
-            assignments["O 石岡"], ["心臓", "頸動脈", "甲状腺", "腹部"]
+            assignments["O 木村"], ["心臓", "頸動脈", "甲状腺", "腹部"]
         )
-        self.assertEqual(assignments["A 石井"], [practical_area_tag("心臓")])
+        self.assertEqual(assignments["A 佐藤"], [practical_area_tag("心臓")])
 
     def test_practical_training_busy_intervals_cover_both_staff(self) -> None:
         slot = _make_slot(12, "男性", ["心臓", "頸動脈", "甲状腺", "腹部"])
         assignments = {
-            "石岡": ["心臓"],
-            "石井": [
+            "木村": ["心臓"],
+            "佐藤": [
                 practical_area_tag("心臓"),
                 "頸動脈",
                 "甲状腺",
@@ -2426,12 +2426,12 @@ class TestPracticalTrainingTiming(unittest.TestCase):
             slot,
             assignments,
             input_data=input_data,
-            specs={"石岡": _full_spec("石岡"), "石井": _full_spec("石井")},
+            specs={"木村": _full_spec("木村"), "佐藤": _full_spec("佐藤")},
         )
         slot_start = minutes_from_day_start(slot.echo_start)
 
-        self.assertEqual(intervals["石岡"], (slot_start, slot_start + 30 + 15))
-        self.assertEqual(intervals["石井"], (slot_start, slot_start + 55 + 15))
+        self.assertEqual(intervals["木村"], (slot_start, slot_start + 30 + 15))
+        self.assertEqual(intervals["佐藤"], (slot_start, slot_start + 55 + 15))
 
 
 class TestEcgEchoMixRule(unittest.TestCase):

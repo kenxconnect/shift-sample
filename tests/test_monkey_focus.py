@@ -140,10 +140,10 @@ class _SessionState(dict):
 class FocusedMonkeyUiTests(unittest.TestCase):
     def _active_specs(self) -> dict[str, scheduler.StaffSpec]:
         return {
-            "石井": spec_from_dict(
+            "佐藤": spec_from_dict(
                 {
                     "id": "A",
-                    "display_name": "石井",
+                    "display_name": "佐藤",
                     "is_free_eligible": True,
                     "echo_areas": ["心臓", "頸動脈", "甲状腺", "乳腺", "腹部"],
                 }
@@ -157,7 +157,7 @@ class FocusedMonkeyUiTests(unittest.TestCase):
                 "assignees": [
                     {
                         "source_type": "free",
-                        "staff_name": "石井",
+                        "staff_name": "佐藤",
                     }
                 ],
                 "start_time": "09:10",
@@ -175,7 +175,7 @@ class FocusedMonkeyUiTests(unittest.TestCase):
                 follow_key=follow_duty.MORNING_FOLLOW_KEY,
                 defaults={"morning_follow": follow_duty.default_morning_follow_input()},
                 duties={},
-                available_staff=["石井"],
+                available_staff=["佐藤"],
                 active_specs=self._active_specs(),
                 reset_inputs=True,
             )
@@ -190,7 +190,7 @@ class FocusedMonkeyUiTests(unittest.TestCase):
                 follow_key=follow_duty.MORNING_FOLLOW_KEY,
                 defaults=self._enabled_follow_defaults(),
                 duties={},
-                available_staff=["石井"],
+                available_staff=["佐藤"],
                 active_specs=self._active_specs(),
                 reset_inputs=True,
             )
@@ -206,7 +206,7 @@ class FocusedMonkeyUiTests(unittest.TestCase):
         fake_st = _RecordingStreamlit(
             overrides={
                 "morning_follow_enabled": True,
-                "morning_follow_assignees": ["free::石井"],
+                "morning_follow_assignees": ["free::佐藤"],
                 "morning_follow_start": "bad",
                 "morning_follow_end": "10:00",
                 "morning_follow_linked": False,
@@ -220,7 +220,7 @@ class FocusedMonkeyUiTests(unittest.TestCase):
                 follow_key=follow_duty.MORNING_FOLLOW_KEY,
                 defaults=follow_defaults,
                 duties={},
-                available_staff=["石井"],
+                available_staff=["佐藤"],
                 active_specs=self._active_specs(),
                 reset_inputs=True,
             )
@@ -235,9 +235,9 @@ class FocusedMonkeyUiTests(unittest.TestCase):
 
     def test_byod_bundle_roundtrip_keeps_selected_version(self) -> None:
         fake_st = type("FakeStreamlit", (), {"session_state": _SessionState()})()
-        base_input = {"target_date": "2026-03-21", "duties": {"生体①": "石井"}}
+        base_input = {"target_date": "2026-03-21", "duties": {"生体①": "佐藤"}}
         history_result = {
-            "table": [{"枠": 1, "心電図担当": "石井", "エコー担当": "秋田"}],
+            "table": [{"枠": 1, "心電図担当": "佐藤", "エコー担当": "鈴木"}],
             "violation_details": [],
         }
         fake_st.session_state.update(
@@ -352,7 +352,7 @@ class FocusedMonkeyLogicTests(unittest.TestCase):
         staff_config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "break_preference_start": "12:00",
                 "break_preference_end": "15:00",
                 "break_minutes": 65,
@@ -360,7 +360,7 @@ class FocusedMonkeyLogicTests(unittest.TestCase):
             },
             {
                 "id": "B",
-                "display_name": "秋田",
+                "display_name": "鈴木",
                 "break_preference_start": "11:30",
                 "break_preference_end": "14:30",
                 "break_minutes": 55,
@@ -380,23 +380,23 @@ class FocusedMonkeyLogicTests(unittest.TestCase):
             }
         }
 
-        input_data["duties"]["バックアップ"] = "石井"
+        input_data["duties"]["バックアップ"] = "佐藤"
         first = apply_role_constraints(specs, input_data)
-        self.assertEqual("10:45", first["石井"].break_preference_start)
-        self.assertEqual(75, first["石井"].break_minutes)
-        self.assertEqual("11:30", first["秋田"].break_preference_start)
+        self.assertEqual("10:45", first["佐藤"].break_preference_start)
+        self.assertEqual(75, first["佐藤"].break_minutes)
+        self.assertEqual("11:30", first["鈴木"].break_preference_start)
 
-        input_data["duties"]["バックアップ"] = "秋田"
+        input_data["duties"]["バックアップ"] = "鈴木"
         second = apply_role_constraints(specs, input_data)
-        self.assertEqual("12:00", second["石井"].break_preference_start)
-        self.assertEqual("10:45", second["秋田"].break_preference_start)
-        self.assertFalse(second["秋田"].allow_split_break)
+        self.assertEqual("12:00", second["佐藤"].break_preference_start)
+        self.assertEqual("10:45", second["鈴木"].break_preference_start)
+        self.assertFalse(second["鈴木"].allow_split_break)
 
     def test_follow_boundary_times_allow_exact_edges_and_block_overlap(self) -> None:
         staff_config = [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "echo_areas": ["心臓", "頸動脈", "甲状腺", "乳腺", "腹部"],
             }
         ]
@@ -404,7 +404,7 @@ class FocusedMonkeyLogicTests(unittest.TestCase):
         input_data = default_input(staff_config)
         input_data["morning_follow"] = {
             "enabled": True,
-            "assignees": [{"source_type": "free", "staff_name": "石井"}],
+            "assignees": [{"source_type": "free", "staff_name": "佐藤"}],
             "start_time": "09:10",
             "end_time": "10:00",
             "linked_area_count": True,
@@ -430,16 +430,16 @@ class FocusedMonkeyLogicTests(unittest.TestCase):
             echo_machine=1,
         )
         self.assertTrue(
-            is_ecg_allowed("石井", exact_edge_slot, specs, {}, input_data, False, False)
+            is_ecg_allowed("佐藤", exact_edge_slot, specs, {}, input_data, False, False)
         )
         self.assertFalse(
-            is_ecg_allowed("石井", overlap_slot, specs, {}, input_data, False, False)
+            is_ecg_allowed("佐藤", overlap_slot, specs, {}, input_data, False, False)
         )
 
         evening_input = default_input(staff_config)
         evening_input["evening_follow"] = {
             "enabled": True,
-            "assignees": [{"source_type": "free", "staff_name": "石井"}],
+            "assignees": [{"source_type": "free", "staff_name": "佐藤"}],
             "start_time": "16:10",
             "end_time": "16:30",
             "linked_area_count": True,
@@ -474,12 +474,12 @@ class FocusedMonkeyLogicTests(unittest.TestCase):
         )
         self.assertTrue(
             is_echo_allowed(
-                "石井", exact_echo_slot, specs, {}, evening_input, False, False
+                "佐藤", exact_echo_slot, specs, {}, evening_input, False, False
             )
         )
         self.assertFalse(
             is_echo_allowed(
-                "石井", overlap_echo_slot, specs, {}, evening_input, False, False
+                "佐藤", overlap_echo_slot, specs, {}, evening_input, False, False
             )
         )
 
@@ -605,9 +605,9 @@ class FocusedMonkeyIntegrationTests(unittest.TestCase):
             "areas": ["心臓"],
         }
         input_data["observer_training"] = {
-            "石岡": {"心臓": {"slots": [3, 4, 6], "count": 1}}
+            "木村": {"心臓": {"slots": [3, 4, 6], "count": 1}}
         }
-        input_data["lunch_duty_staff"] = ["上之平"]
+        input_data["lunch_duty_staff"] = ["山本"]
         input_data["slot_echo_start_times"] = {
             "17": "14:15",
             "18": "14:40",
@@ -627,7 +627,7 @@ class FocusedMonkeyIntegrationTests(unittest.TestCase):
     def _reschedule_roundtrip_input(self) -> dict:
         input_data = default_input(copy.deepcopy(self.staff_config))
         input_data["patient_count"] = 22
-        input_data["off_staff"] = ["大橋", "皆口"]
+        input_data["off_staff"] = ["高橋", "吉田"]
         input_data["female_slots"] = [2, 5, 8, 11, 14, 17, 20]
         input_data["staff_config"] = copy.deepcopy(self.staff_config)
         return input_data
@@ -680,7 +680,7 @@ class FocusedMonkeyIntegrationTests(unittest.TestCase):
             row
             for row in result["table"]
             if row["枠"] in {3, 4, 6}
-            and "石岡" in row.get("エコー担当", "")
+            and "木村" in row.get("エコー担当", "")
             and "(見学)" in row.get("エコー領域", "")
         ]
         self.assertTrue(

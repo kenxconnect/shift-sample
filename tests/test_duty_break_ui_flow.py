@@ -195,7 +195,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
         return [
             {
                 "id": "A",
-                "display_name": "石井",
+                "display_name": "佐藤",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -220,7 +220,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
         staff_config = self._single_staff_config() + [
             {
                 "id": "B",
-                "display_name": "秋田",
+                "display_name": "鈴木",
                 "is_active": True,
                 "is_free_eligible": True,
                 "can_ecg": True,
@@ -243,23 +243,23 @@ class TestDutyBreakUiFlow(unittest.TestCase):
         ]
         input_data = scheduler.default_input(copy.deepcopy(staff_config))
         result = {
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "used_input": copy.deepcopy(input_data),
         }
 
         options, defaults = app.lunch_change_exclusion_options(input_data, result)
 
-        self.assertIn("石井", options)
-        self.assertIn("秋田", options)
-        self.assertEqual(defaults, ["石井"])
+        self.assertIn("佐藤", options)
+        self.assertIn("鈴木", options)
+        self.assertEqual(defaults, ["佐藤"])
 
     def test_build_lunch_duty_summary_rows_for_contiguous_130_minutes(self) -> None:
         staff_config = self._single_staff_config()
         input_data = scheduler.default_input(copy.deepcopy(staff_config))
         result = {
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "lunch_duty_display_intervals": {
-                "石井": (
+                "佐藤": (
                     scheduler.minutes_from_day_start("11:00"),
                     scheduler.minutes_from_day_start("13:10"),
                 )
@@ -273,7 +273,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
             rows,
             [
                 {
-                    "担当者": "石井",
+                    "担当者": "佐藤",
                     "表示形式": "130分連続",
                     "時間帯": "11:00-13:10",
                     "確保状況": "確保",
@@ -285,9 +285,9 @@ class TestDutyBreakUiFlow(unittest.TestCase):
         staff_config = self._single_staff_config()
         input_data = scheduler.default_input(copy.deepcopy(staff_config))
         result = {
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "break_intervals": {
-                "石井": (
+                "佐藤": (
                     scheduler.minutes_from_day_start("11:15"),
                     scheduler.minutes_from_day_start("12:15"),
                 )
@@ -297,7 +297,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
 
         rows = app.build_lunch_duty_summary_rows(result, input_data)
 
-        self.assertEqual(rows[0]["担当者"], "石井")
+        self.assertEqual(rows[0]["担当者"], "佐藤")
         self.assertEqual(rows[0]["表示形式"], "不足")
         self.assertEqual(rows[0]["時間帯"], "11:15-12:15")
         self.assertIn("130分連続", rows[0]["確保状況"])
@@ -307,27 +307,27 @@ class TestDutyBreakUiFlow(unittest.TestCase):
         fake_st.session_state["_lunch_change_exclusion_signature"] = ()
 
         with patch.object(app, "st", fake_st):
-            app.sync_post_lunch_duty_state({"lunch_duty_staff": ["石井"]})
+            app.sync_post_lunch_duty_state({"lunch_duty_staff": ["佐藤"]})
 
         self.assertNotIn("lunch_change_excluded_staff", fake_st.session_state)
         self.assertEqual(
-            fake_st.session_state["_pending_lunch_change_excluded_staff"], ["石井"]
+            fake_st.session_state["_pending_lunch_change_excluded_staff"], ["佐藤"]
         )
 
     def test_apply_pending_lunch_change_exclusion_state_sets_widget_value_before_render(
         self,
     ) -> None:
         fake_st = _FakeStreamlit(inputs={}, buttons={})
-        fake_st.session_state["_pending_lunch_change_exclusion_signature"] = ("石井",)
-        fake_st.session_state["_pending_lunch_change_excluded_staff"] = ["石井"]
+        fake_st.session_state["_pending_lunch_change_exclusion_signature"] = ("佐藤",)
+        fake_st.session_state["_pending_lunch_change_excluded_staff"] = ["佐藤"]
 
         with patch.object(app, "st", fake_st):
             app.apply_pending_lunch_change_exclusion_state()
 
         self.assertEqual(
-            fake_st.session_state["_lunch_change_exclusion_signature"], ("石井",)
+            fake_st.session_state["_lunch_change_exclusion_signature"], ("佐藤",)
         )
-        self.assertEqual(fake_st.session_state["lunch_change_excluded_staff"], ["石井"])
+        self.assertEqual(fake_st.session_state["lunch_change_excluded_staff"], ["佐藤"])
 
     def test_ui_saves_duty_break_settings_into_constraint_settings(self) -> None:
         fake_st, saved = self._render_constraint_settings(
@@ -380,19 +380,19 @@ class TestDutyBreakUiFlow(unittest.TestCase):
         staff_config = self._single_staff_config()
         input_data = scheduler.default_input(copy.deepcopy(staff_config))
         input_data["constraint_settings"] = copy.deepcopy(saved)
-        input_data["duties"]["バックアップ"] = "石井"
+        input_data["duties"]["バックアップ"] = "佐藤"
 
         specs = scheduler.apply_role_constraints(
             scheduler.specs_from_config(staff_config), input_data
         )
-        spec = specs["石井"]
+        spec = specs["佐藤"]
         self.assertEqual(spec.break_preference_start, "11:15")
         self.assertEqual(spec.break_preference_end, "14:45")
         self.assertEqual(spec.break_minutes, 75)
         self.assertTrue(spec.allow_split_break)
 
         candidates = scheduler.build_break_interval_candidates(
-            name="石井",
+            name="佐藤",
             spec=spec,
             special_early_staff=set(),
             lunch_duty_staff=[],
@@ -423,7 +423,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
         staff_config = self._single_staff_config()
         input_data = scheduler.default_input(copy.deepcopy(staff_config))
         input_data["constraint_settings"] = copy.deepcopy(saved)
-        input_data["duties"]["バックアップ"] = "石井"
+        input_data["duties"]["バックアップ"] = "佐藤"
 
         specs = scheduler.apply_role_constraints(
             scheduler.specs_from_config(staff_config), input_data
@@ -438,7 +438,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
             ),
             slots,
         )
-        self.assertEqual(breaks["石井"], expected_slots)
+        self.assertEqual(breaks["佐藤"], expected_slots)
 
     def test_non_duty_staff_keeps_staff_level_break_settings(self) -> None:
         _fake_st, saved = self._render_constraint_settings(
@@ -458,7 +458,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
         specs = scheduler.apply_role_constraints(
             scheduler.specs_from_config(staff_config), input_data
         )
-        spec = specs["石井"]
+        spec = specs["佐藤"]
         self.assertEqual(spec.break_preference_start, "10:30")
         self.assertEqual(spec.break_preference_end, "15:10")
         self.assertEqual(spec.break_minutes, 65)
@@ -475,7 +475,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     "患者性別": "男性",
                     "エコー担当": "未割当",
                     "エコー領域": "未割当",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "09:00",
                     "エコー開始": "09:25",
                     "心電図機械": 1,
@@ -483,20 +483,20 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     "メモ": "",
                 }
             ],
-            "breaks": {"石井": set()},
+            "breaks": {"佐藤": set()},
             "break_intervals": {
-                "石井": (
+                "佐藤": (
                     scheduler.minutes_from_day_start("11:00"),
                     scheduler.minutes_from_day_start("12:00"),
                 )
             },
             "lunch_duty_display_intervals": {
-                "石井": (
+                "佐藤": (
                     scheduler.minutes_from_day_start("11:00"),
                     scheduler.minutes_from_day_start("13:10"),
                 )
             },
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "pair_task_orders": {},
         }
 
@@ -508,7 +508,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
         self.assertEqual(lunch_row["開始"], "11:00")
         self.assertEqual(lunch_row["終了"], "13:10")
         self.assertEqual(
-            app.display_break_text_for_staff("石井", result, input_data), "昼当番"
+            app.display_break_text_for_staff("佐藤", result, input_data), "昼当番"
         )
 
     def test_staff_gantt_supports_split_lunch_duty_bars(self) -> None:
@@ -522,7 +522,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     "患者性別": "男性",
                     "エコー担当": "未割当",
                     "エコー領域": "未割当",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "09:00",
                     "エコー開始": "09:25",
                     "心電図機械": 1,
@@ -530,10 +530,10 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     "メモ": "",
                 }
             ],
-            "breaks": {"石井": set()},
-            "break_intervals": {"石井": (scheduler.minutes_from_day_start("11:00"), scheduler.minutes_from_day_start("12:00"))},
+            "breaks": {"佐藤": set()},
+            "break_intervals": {"佐藤": (scheduler.minutes_from_day_start("11:00"), scheduler.minutes_from_day_start("12:00"))},
             "lunch_duty_display_intervals": {
-                "石井": (
+                "佐藤": (
                     (
                         scheduler.minutes_from_day_start("10:20"),
                         scheduler.minutes_from_day_start("11:20"),
@@ -544,7 +544,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     ),
                 )
             },
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "pair_task_orders": {},
         }
 
@@ -573,7 +573,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     "患者性別": "男性",
                     "エコー担当": "未割当",
                     "エコー領域": "未割当",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "10:55",
                     "エコー開始": "09:25",
                     "心電図機械": 1,
@@ -585,7 +585,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     "患者性別": "男性",
                     "エコー担当": "未割当",
                     "エコー領域": "未割当",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "12:15",
                     "エコー開始": "09:40",
                     "心電図機械": 1,
@@ -597,7 +597,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     "患者性別": "男性",
                     "エコー担当": "未割当",
                     "エコー領域": "未割当",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "13:40",
                     "エコー開始": "09:55",
                     "心電図機械": 1,
@@ -609,7 +609,7 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     "患者性別": "男性",
                     "エコー担当": "未割当",
                     "エコー領域": "未割当",
-                    "心電図担当": "石井",
+                    "心電図担当": "佐藤",
                     "心電図開始": "14:55",
                     "エコー開始": "10:10",
                     "心電図機械": 1,
@@ -617,14 +617,14 @@ class TestDutyBreakUiFlow(unittest.TestCase):
                     "メモ": "",
                 }
             ],
-            "breaks": {"石井": set()},
+            "breaks": {"佐藤": set()},
             "break_intervals": {
-                "石井": (
+                "佐藤": (
                     scheduler.minutes_from_day_start("11:15"),
                     scheduler.minutes_from_day_start("12:15"),
                 )
             },
-            "lunch_duty_staff": ["石井"],
+            "lunch_duty_staff": ["佐藤"],
             "pair_task_orders": {},
             "used_input": copy.deepcopy(input_data),
         }
